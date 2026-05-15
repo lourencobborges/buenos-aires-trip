@@ -71,6 +71,9 @@
    ===================================================================== */
 *, *::before, *::after { box-sizing: border-box; }
 
+/* Fix: garantir que [hidden] esconde mesmo se a classe define display */
+[hidden] { display: none !important; }
+
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
@@ -706,13 +709,16 @@ button { font-family: inherit; cursor: pointer; }
   left: 0;
   right: 0;
   z-index: 45;
-  background: color-mix(in srgb, var(--bg-elev) 94%, transparent);
-  backdrop-filter: saturate(180%) blur(16px);
-  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  background: color-mix(in srgb, var(--bg-elev) 96%, transparent);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
   border-top: 1px solid var(--line);
   display: flex;
   height: calc(var(--bottomnav-h) + env(safe-area-inset-bottom, 0px));
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding: 0 8px env(safe-area-inset-bottom, 0px);
+  gap: 4px;
+  align-items: center;
+  box-shadow: 0 -4px 24px rgba(15, 37, 64, 0.06);
 }
 
 .bn {
@@ -721,31 +727,39 @@ button { font-family: inherit; cursor: pointer; }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: 2px;
   background: transparent;
   border: none;
   color: var(--ink-3);
   font-size: 11px;
-  font-weight: 500;
-  padding: 6px 4px;
+  font-weight: 600;
+  padding: 8px 4px;
   position: relative;
-  transition: color 0.2s ease, transform 0.15s var(--ease);
+  border-radius: 14px;
+  transition: color 0.2s ease, background 0.2s ease, transform 0.15s var(--ease);
 }
-.bn:hover { text-decoration: none; }
+.bn:hover { text-decoration: none; background: var(--bg-soft); }
 .bn:active { transform: scale(0.94); }
-.bn.active { color: var(--azul); }
+.bn svg { transition: stroke-width 0.2s ease; }
+
+/* Item ativo: fundo celeste suave, texto azul forte, ícone com stroke maior */
+.bn.active {
+  color: var(--azul);
+  background: color-mix(in srgb, var(--celeste) 22%, transparent);
+}
 .bn.active svg { stroke-width: 2.4; }
 
-/* Sublinhado de "tab ativa" — barra amarela */
-.bn.active::before {
+/* Pontinho amarelo (sol) abaixo do label da aba ativa */
+.bn.active::after {
   content: "";
   position: absolute;
-  top: 0;
-  left: 28%;
-  right: 28%;
-  height: 3px;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
   background: var(--sol);
-  border-radius: 0 0 3px 3px;
 }
 
 /* =====================================================================

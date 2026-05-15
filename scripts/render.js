@@ -34,6 +34,14 @@ export function lugarCardHTML(l) {
   const meta = TIPO_META[l.tipo] || { icone: "📍", label: l.tipo };
   const resMeta = RESERVA_META[l.reserva] || { label: l.reserva };
 
+  // Pra lojas: troca o badge de "Walk-in" por "Fecha dom" quando aplicável.
+  const isCompras = l.tipo === "compras";
+  const badgeHTML = isCompras
+    ? (l.fechaDom
+        ? `<span class="closed-tag">Fecha dom</span>`
+        : `<span class="open-tag">Abre dom</span>`)
+    : `<span class="reserva-pill" data-r="${esc(l.reserva)}">${esc(resMeta.label)}</span>`;
+
   return `
     <article class="lugar-card ${l.destaque ? "destaque" : ""}"
              data-tipo="${esc(l.tipo)}"
@@ -52,9 +60,7 @@ export function lugarCardHTML(l) {
             <span>${esc(l.bairro)}</span>
           </div>
         </div>
-        <span class="reserva-pill" data-r="${esc(l.reserva)}">
-          ${esc(resMeta.label)}
-        </span>
+        ${badgeHTML}
       </div>
     </article>
   `;
@@ -132,7 +138,9 @@ export function renderBares() {
 }
 
 export function renderCompras() {
-  const lista = LUGARES.filter(l => l.tipo === "compras");
+  // destaque (faz questão) primeiro, depois resto
+  const lista = LUGARES.filter(l => l.tipo === "compras")
+    .sort((a, b) => Number(Boolean(b.destaque)) - Number(Boolean(a.destaque)));
   document.getElementById("compras-grid").innerHTML = lista.map(lugarCardHTML).join("");
 }
 
@@ -171,6 +179,14 @@ export function renderRoteiro(roteiro) {
           </div>`
         : "";
 
+      // Linhas extras (indicado por + alternativa) só aparecem na expansão
+      const indicadoPor = lugar?.indicacao
+        ? `<div class="item-extra"><strong>Indicado por:</strong> ${esc(lugar.indicacao)}</div>`
+        : "";
+      const alternativa = item.alternativa
+        ? `<div class="item-extra"><strong>Alternativa:</strong> ${esc(item.alternativa)}</div>`
+        : "";
+
       return `
         <div class="dia-item ${checked ? "done" : ""} ${item.destaque ? "destaque" : ""}"
              data-check-id="${id}"
@@ -180,6 +196,8 @@ export function renderRoteiro(roteiro) {
           <div class="item-body">
             <div class="item-title">${esc(item.titulo)}</div>
             ${item.desc ? `<div class="item-desc">${esc(item.desc)}</div>` : ""}
+            ${indicadoPor}
+            ${alternativa}
             ${acoes}
           </div>
         </div>
@@ -196,14 +214,3 @@ export function renderRoteiro(roteiro) {
   document.getElementById("roteiro-container").innerHTML = dias;
 }
 
-// ---------------------------------------------------------------------
-// LOGÍSTICA + DISTÂNCIAS
-// ---------------------------------------------------------------------
-export function renderLogistica(logistica) {
-  document.getElementById("logistica-container").innerHTML = logistica.map(g => `
-    <div class="logistica-grupo">
-      <h3>${esc(g.grupo)}</h3>
-      <ul>${g.itens.map(i => `<li>${esc(i)}</li>`).join("")}</ul>
-    </div>
-  `).join("");
-}

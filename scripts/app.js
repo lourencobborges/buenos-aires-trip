@@ -4,11 +4,11 @@
 // "Mais" menu, filtros, tema, countdown, progress bar, modo "agora".
 // =====================================================================
 
-import { LUGARES, ROTEIRO, LOGISTICA, VIAGEM } from "./data.js";
+import { LUGARES, ROTEIRO, VIAGEM } from "./data.js";
 import { storage, theme as themeStore } from "./storage.js";
 import {
   renderRestaurantes, renderCafes, renderBares, renderCompras,
-  renderRoteiro, renderLogistica,
+  renderRoteiro,
   lugarDetalheHTML,
 } from "./render.js";
 import { initMap, renderLegenda } from "./map.js";
@@ -28,7 +28,6 @@ function renderAll() {
   renderCafes();
   renderBares();
   renderCompras();
-  renderLogistica(LOGISTICA);
   renderLegenda("map-legenda");
   updateProgress();
 }
@@ -38,12 +37,12 @@ function renderAll() {
 // ---------------------------------------------------------------------
 function initNav() {
   const links = $$("[data-nav]");
-  const sectionIds = ["visao", "roteiro", "comer", "cafes", "compras", "bares", "mapa", "logistica"];
+  const sectionIds = ["visao", "roteiro", "comer", "cafes", "lojas", "bares", "mapa"];
   const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
 
   // Mapeia cada seção pro link mais próximo (alguns links representam várias seções)
   function linkParaSecao(id) {
-    if (["cafes", "bares", "compras", "logistica"].includes(id)) return links.find(l => l.id === "more-btn") || null;
+    if (["cafes", "bares", "lojas"].includes(id)) return links.find(l => l.id === "more-btn") || null;
     return links.find(l => l.getAttribute("href") === "#" + id) || null;
   }
 

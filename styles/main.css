@@ -2,17 +2,19 @@
    DESIGN TOKENS — paleta sóbria + tipografia editorial
    ===================================================================== */
 :root {
-  --bg: #fdfaf4;
+  /* Paleta bandeira argentina: azul-celeste, branco, amarelo (sol).
+     Azul é o protagonista; amarelo entra como destaque (estrelas, alertas). */
+  --bg: #f6faff;
   --bg-elev: #ffffff;
-  --bg-soft: #f5ecd6;
-  --ink: #2a2018;
-  --ink-2: #6e5e4a;
-  --ink-3: #ad9d85;
-  --line: #f0e7d2;
-  --line-2: #e2d6bb;
-  --accent: #b8482e;
-  --accent-2: #d96846;
-  --gold: #c9931c;
+  --bg-soft: #e5f0fa;
+  --ink: #142a44;
+  --ink-2: #4a5e7a;
+  --ink-3: #94a8c2;
+  --line: #d8e6f5;
+  --line-2: #b8cce0;
+  --accent: #2c6fb3;      /* azul argentino mais cheio */
+  --accent-2: #4892d6;    /* celeste claro pra hovers */
+  --gold: #f0b830;        /* amarelo do sol */
   --green: #3a8865;
 
   --radius: 18px;
@@ -34,17 +36,17 @@
 }
 
 [data-theme="dark"] {
-  --bg: #14110d;
-  --bg-elev: #1d1813;
-  --bg-soft: #261f17;
-  --ink: #f3ead7;
-  --ink-2: #c4b59b;
-  --ink-3: #8a7d65;
-  --line: #2c241c;
-  --line-2: #3a2f24;
-  --accent: #e88a5e;
-  --accent-2: #f0a47b;
-  --gold: #e0b04a;
+  --bg: #0e1626;
+  --bg-elev: #18243c;
+  --bg-soft: #213152;
+  --ink: #e8efff;
+  --ink-2: #b0c0db;
+  --ink-3: #6c84a8;
+  --line: #243456;
+  --line-2: #324a72;
+  --accent: #6eaae0;
+  --accent-2: #8cc1ec;
+  --gold: #f5c84a;
   --green: #5dbb88;
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
@@ -524,6 +526,23 @@ button { font-family: inherit; cursor: pointer; }
 }
 .dia-item[data-open="true"] .item-actions { display: flex; }
 
+.item-extra {
+  display: none;
+  font-size: 12.5px;
+  color: var(--ink-2);
+  margin-top: 6px;
+  line-height: 1.45;
+}
+.item-extra strong {
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  font-weight: 600;
+  margin-right: 4px;
+}
+.dia-item[data-open="true"] .item-extra { display: block; }
+
 /* =====================================================================
    CARDS DE LUGAR — colapsados por padrão, expansão com tap
    ===================================================================== */
@@ -627,9 +646,45 @@ button { font-family: inherit; cursor: pointer; }
   background: color-mix(in srgb, var(--green) 18%, var(--bg-elev));
   color: var(--green);
 }
-.reserva-pill[data-r="precisa"] {
-  background: color-mix(in srgb, var(--gold) 18%, var(--bg-elev));
-  color: var(--gold);
+
+.closed-tag {
+  font-size: 10.5px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  background: color-mix(in srgb, var(--gold) 22%, var(--bg-elev));
+  color: color-mix(in srgb, var(--gold) 60%, var(--ink));
+  border: 1px solid color-mix(in srgb, var(--gold) 40%, var(--line));
+}
+
+.open-tag {
+  font-size: 10.5px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  background: color-mix(in srgb, var(--accent) 12%, var(--bg-elev));
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
+}
+
+.closed-tag-inline {
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+  background: color-mix(in srgb, var(--gold) 22%, var(--bg-elev));
+  color: color-mix(in srgb, var(--gold) 60%, var(--ink));
+}
+
+/* Card de loja "faz questão" — destaque dourado sutil */
+.lugar-card[data-tipo="compras"].destaque {
+  border-color: color-mix(in srgb, var(--gold) 60%, var(--line));
+  background: color-mix(in srgb, var(--gold) 3%, var(--bg-elev));
+  box-shadow: 0 1px 2px rgba(31, 22, 17, 0.05), 0 0 0 1px color-mix(in srgb, var(--gold) 25%, transparent);
 }
 
 /* =====================================================================

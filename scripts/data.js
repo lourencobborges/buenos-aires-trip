@@ -412,17 +412,6 @@ export const LUGARES = [
 
   // ============ PASSEIOS ============
   {
-    id: "recoleta-cemiterio",
-    nome: "Cemitério da Recoleta",
-    tipo: "passeio",
-    bairro: "Recoleta",
-    endereco: "Junín 1760, Recoleta",
-    coords: [-34.5876, -58.3935],
-    reserva: "walkin",
-    indicacao: "Próprio",
-    notas: "Túmulo de Evita. Entrada paga, ~30min-1h.",
-  },
-  {
     id: "el-ateneo",
     nome: "El Ateneo Grand Splendid",
     tipo: "passeio",
@@ -526,7 +515,7 @@ export const ROTEIRO = [
       { hora: "10:45", lugarId: "jardin-botanico", titulo: "🌳 Jardín Botánico", transporte: { tipo: "pe", tempo: "15 min do Cuervo" }, desc: "Passeio leve, ao ar livre. Entrada gratuita. ~30 min." },
       { hora: "11:15", lugarId: null, titulo: "Checkout + luggage storage", transporte: { tipo: "pe", tempo: "10 min" }, desc: "Malas ficam no Vain até 17:45." },
       { hora: "11:30", lugarId: null, titulo: "Uber pra Recoleta", transporte: { tipo: "carro", tempo: "10 min" }, desc: "Direto pro El Ateneo." },
-      { hora: "11:40", lugarId: "el-ateneo", titulo: "📚 El Ateneo Grand Splendid", desc: "Livraria ex-teatro, foto rápida (15-20 min). Vale.", alternativa: "Se sobrar tempo: Cemitério da Recoleta (Evita, +45 min) ou Maison Mimmi (Bia, Parera 46)" },
+      { hora: "11:40", lugarId: "el-ateneo", titulo: "📚 El Ateneo Grand Splendid", desc: "Livraria ex-teatro, foto rápida (15-20 min). Vale.", alternativa: "Se sobrar tempo: Maison Mimmi (loja Bia em Recoleta, Parera 46)" },
       { hora: "12:05", lugarId: null, titulo: "Uber pra Plaza de Mayo", transporte: { tipo: "carro", tempo: "10 min" }, desc: "Centro." },
       { hora: "12:15", lugarId: "plaza-mayo", titulo: "🏛️ Plaza de Mayo + Casa Rosada", desc: "Foto da Casa Rosada, Catedral, Cabildo. ~25 min." },
       { hora: "12:40", lugarId: null, titulo: "Caminhada até San Telmo", transporte: { tipo: "pe", tempo: "15 min" }, desc: "Pela rua Defensa — coração do bairro antigo." },
@@ -612,7 +601,7 @@ export const DISTANCIAS = [
   ["Florería Atlántico", "—", "15 min"],
   ["Gris Gris", "10 min", "4 min"],
   ["Uptown", "15 min", "5 min"],
-  ["Recoleta (Cemitério)", "—", "15 min"],
+  ["Recoleta (El Ateneo)", "—", "15 min"],
   ["El Ateneo", "—", "15 min"],
   ["San Telmo", "—", "20 min"],
   ["Ezeiza (EZE)", "—", "45-60 min"],

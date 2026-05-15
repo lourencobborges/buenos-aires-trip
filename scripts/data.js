@@ -498,7 +498,7 @@ export const ROTEIRO = [
       { hora: "13:30", lugarId: null, titulo: "Tempo livre em Palermo", transporte: { tipo: "carro", tempo: "10 min" }, desc: "Uber de volta. Café leve, caminhada, sentar num bar sem álcool — Don Julio é em 1h30.", alternativa: "Voltar pro hotel descansar até 14:45" },
       { hora: "14:50", lugarId: null, titulo: "Caminhada até Don Julio", transporte: { tipo: "pe", tempo: "7 min" }, desc: "Saindo do hotel ou de onde estiverem em Palermo Soho." },
       { hora: "15:00", lugarId: "don-julio", titulo: "🥩 DON JULIO (RESERVADO)", desc: "Chegar 14:50. Tolerância 15 min. Sugestões de pedido no card.", destaque: true, alternativa: "La Cabrera (walk-in cedo, 19h) ou Elena no Four Seasons" },
-      { hora: "17:30", lugarId: null, titulo: "Hotel — descanso depois do almoço", transporte: { tipo: "pe", tempo: "7 min do Don Julio" }, desc: "Sem pressa. Cochilo, ler, beber água." },
+      { hora: "17:30", lugarId: null, titulo: "Hotel — descansar", transporte: { tipo: "pe", tempo: "7 min do Don Julio" }, desc: "Cochilo, ler, água. Recarregar antes da noite agitada (Norimoto + Florería até tarde).", alternativa: "Caminhada por Palermo Soho até Plaza Serrano (digere o almoço, ar livre) OU Bosques de Palermo + Rosedal (parque, 5 min Uber)" },
       { hora: "19:00", lugarId: null, titulo: "Banho e troca pra noite", desc: "" },
       { hora: "19:30", lugarId: null, titulo: "Sai pro Norimoto", transporte: { tipo: "carro", tempo: "5 min" }, desc: "Uber até Amenábar 3, Palermo." },
       { hora: "19:45", lugarId: "norimoto", titulo: "🍣 Norimoto — jantar leve", desc: "Omakase / sushi de balcão. ~1h. Sai 20:45 pro Florería.", alternativa: "Pular jantar e ir direto pro Florería 20:30 (chega cedo, sem fila)" },

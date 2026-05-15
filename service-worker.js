@@ -3,7 +3,7 @@
 // Bumpar CACHE quando publicar mudança força clientes a baixar de novo.
 // =====================================================================
 
-const CACHE = "ba-trip-v5";
+const CACHE = "ba-trip-v6";
 
 const SHELL = [
   "./",

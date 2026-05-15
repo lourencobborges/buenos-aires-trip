@@ -11,8 +11,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="styles/main.css?v=4" />
-  <link rel="stylesheet" href="styles/responsive.css?v=4" />
+  <link rel="stylesheet" href="styles/main.css?v=5" />
+  <link rel="stylesheet" href="styles/responsive.css?v=5" />
 
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="assets/icons/icon-192.png" />
@@ -76,20 +76,31 @@
     <section id="comer" class="section">
       <header class="section-head"><h2>Comer &amp; beber</h2></header>
 
-      <select id="filter-tipo" class="select-pill" aria-label="Filtrar por tipo">
-        <option value="all">Todos os restaurantes</option>
-        <option value="parrilla">🥩 Parrilla</option>
-        <option value="bodegon">🍴 Bodegón</option>
-        <option value="japa">🍣 Japa</option>
-        <option value="italiana">🍝 Italiana</option>
-      </select>
-      <div id="restaurantes-grid" class="card-grid"></div>
+      <!-- Tabs internas sticky: Restaurantes / Cafés / Bares -->
+      <div class="inner-tabs">
+        <button class="inner-tab" data-inner-tab="restaurantes" data-active="true">🍴 Restaurantes</button>
+        <button class="inner-tab" data-inner-tab="cafes" data-active="false">☕ Cafés</button>
+        <button class="inner-tab" data-inner-tab="bares" data-active="false">🍸 Bares</button>
+      </div>
 
-      <h3 class="sub-section">☕ Cafés</h3>
-      <div id="cafes-grid" class="card-grid"></div>
+      <div class="inner-pane" data-inner-pane="restaurantes" data-active="true">
+        <select id="filter-tipo" class="select-pill" aria-label="Filtrar por tipo">
+          <option value="all">Todos os tipos</option>
+          <option value="parrilla">🥩 Parrilla</option>
+          <option value="bodegon">🍴 Bodegón</option>
+          <option value="japa">🍣 Japa</option>
+          <option value="italiana">🍝 Italiana</option>
+        </select>
+        <div id="restaurantes-grid" class="card-grid"></div>
+      </div>
 
-      <h3 class="sub-section">🍸 Bares</h3>
-      <div id="bares-grid" class="card-grid"></div>
+      <div class="inner-pane" data-inner-pane="cafes" data-active="false">
+        <div id="cafes-grid" class="card-grid"></div>
+      </div>
+
+      <div class="inner-pane" data-inner-pane="bares" data-active="false">
+        <div id="bares-grid" class="card-grid"></div>
+      </div>
     </section>
 
     <section id="lojas" class="section">
@@ -130,7 +141,7 @@
   </div>
   <div class="sheet-backdrop" id="detail-backdrop" hidden></div>
 
-  <script type="module" src="scripts/app.js?v=4"></script>
+  <script type="module" src="scripts/app.js?v=5"></script>
 
   <script>
     // Atualiza o service worker — força reload do cache na próxima visita

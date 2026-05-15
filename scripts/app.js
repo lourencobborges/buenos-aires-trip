@@ -135,6 +135,17 @@ function initFilters() {
   });
 }
 
+// Tabs internas (Restaurantes / Cafés / Bares dentro de "Comer")
+function initInnerTabs() {
+  document.addEventListener("click", e => {
+    const tab = e.target.closest("[data-inner-tab]");
+    if (!tab) return;
+    const target = tab.dataset.innerTab;
+    $$("[data-inner-tab]").forEach(t => t.dataset.active = String(t.dataset.innerTab === target));
+    $$("[data-inner-pane]").forEach(p => p.dataset.active = String(p.dataset.innerPane === target));
+  });
+}
+
 // ---------------------------------------------------------------------
 // 6. CARDS de lugar → bottom-sheet de detalhe
 // ---------------------------------------------------------------------
@@ -260,6 +271,7 @@ function boot() {
   initNav();
   initRoteiroInteractions();
   initFilters();
+  initInnerTabs();
   initCardTaps();
   initDetailSheet();
   initTheme();

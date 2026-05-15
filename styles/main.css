@@ -154,21 +154,28 @@ button { font-family: inherit; cursor: pointer; }
 .section {
   max-width: var(--max-w);
   margin: 0 auto;
-  padding: 36px 20px 12px;
+  padding: 40px 20px 8px;
   scroll-margin-top: calc(var(--topbar-h) + 16px);
 }
 
-.section--first { padding-top: 24px; }
+.section--first { padding-top: 28px; }
 
 .section-head {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
 }
 
 .section-head h2 {
-  font-size: 28px;
+  font-size: 24px;
+}
+
+.section-intro {
+  font-size: 13.5px;
+  color: var(--ink-2);
+  margin: -8px 0 14px;
+  max-width: 50ch;
 }
 
 .ghost-btn {
@@ -190,32 +197,22 @@ button { font-family: inherit; cursor: pointer; }
    HERO — limpo, editorial
    ===================================================================== */
 .hero {
-  padding: 24px 0 12px;
-}
-
-.eyebrow {
-  margin: 0 0 12px;
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 600;
+  padding: 12px 0 4px;
 }
 
 .hero-title {
-  font-size: clamp(36px, 9vw, 56px);
-  line-height: 1.02;
-  margin: 0 0 14px;
+  font-size: clamp(32px, 8vw, 48px);
+  line-height: 1.05;
+  margin: 0 0 10px;
   font-variation-settings: "opsz" 144;
-  max-width: 14ch;
   color: var(--ink);
+  letter-spacing: -0.025em;
 }
 
 .hero-sub {
-  margin: 0 0 24px;
+  margin: 0;
   color: var(--ink-2);
-  font-size: 15px;
-  max-width: 42ch;
+  font-size: 14px;
   line-height: 1.5;
 }
 
@@ -351,30 +348,28 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 .progress-card {
-  margin-top: 18px;
-  background: var(--bg-elev);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  padding: 14px 16px;
+  margin-top: 22px;
+  padding: 0;
 }
 
 .progress-head {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  font-size: 13px;
+  font-size: 11.5px;
   margin-bottom: 8px;
-}
-
-.progress-head strong {
-  font-weight: 600;
-  color: var(--ink);
-}
-
-.progress-head span {
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--ink-3);
-  font-size: 12px;
+  font-weight: 600;
+}
+
+.progress-head span:last-child {
+  color: var(--accent);
   font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 12px;
 }
 
 .progress-track {
@@ -532,16 +527,9 @@ button { font-family: inherit; cursor: pointer; }
 /* =====================================================================
    CARDS DE LUGAR — colapsados por padrão, expansão com tap
    ===================================================================== */
-.filter-bar {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-}
-
 .select-pill {
-  flex: 1;
-  min-width: 0;
+  display: block;
+  width: 100%;
   background: var(--bg-elev);
   border: 1px solid var(--line);
   border-radius: 999px;
@@ -551,11 +539,12 @@ button { font-family: inherit; cursor: pointer; }
   color: var(--ink);
   appearance: none;
   -webkit-appearance: none;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path fill='none' stroke='%23968774' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' d='M1 1l5 5 5-5'/></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path fill='none' stroke='%23ad9d85' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' d='M1 1l5 5 5-5'/></svg>");
   background-repeat: no-repeat;
   background-position: right 14px center;
   background-size: 10px;
   padding-right: 32px;
+  margin-bottom: 14px;
 }
 
 .card-grid {

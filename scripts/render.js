@@ -131,6 +131,11 @@ export function renderBares() {
   document.getElementById("bares-grid").innerHTML = lista.map(lugarCardHTML).join("");
 }
 
+export function renderCompras() {
+  const lista = LUGARES.filter(l => l.tipo === "compras");
+  document.getElementById("compras-grid").innerHTML = lista.map(lugarCardHTML).join("");
+}
+
 // ---------------------------------------------------------------------
 // ROTEIRO — tabs de dia + lista com checkbox custom
 // ---------------------------------------------------------------------
@@ -200,16 +205,5 @@ export function renderLogistica(logistica) {
       <h3>${esc(g.grupo)}</h3>
       <ul>${g.itens.map(i => `<li>${esc(i)}</li>`).join("")}</ul>
     </div>
-  `).join("");
-}
-
-export function renderDistancias(distancias) {
-  const tbody = document.querySelector("#distancias-table tbody");
-  tbody.innerHTML = distancias.map(([lugar, pe, carro]) => `
-    <tr>
-      <td>${esc(lugar)}</td>
-      <td>${esc(pe)}</td>
-      <td>${esc(carro)}</td>
-    </tr>
   `).join("");
 }

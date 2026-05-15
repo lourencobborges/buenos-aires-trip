@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#fdfaf4" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#14110d" media="(prefers-color-scheme: dark)" />
   <title>Buenos Aires · Lourenço & Bia</title>
-  <meta name="description" content="Roteiro interativo da viagem a Buenos Aires de 15 a 17 de maio de 2026." />
+  <meta name="description" content="Roteiro Buenos Aires — 15 a 17 de maio de 2026." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,12 +24,11 @@
 </head>
 <body data-theme="light">
 
-  <!-- ============ TOP BAR — minimal ============ -->
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
         <span class="brand-title">Buenos Aires</span>
-        <span class="brand-dates" id="brand-dates">15 → 17 maio</span>
+        <span class="brand-dates">15 → 17 maio</span>
       </div>
       <button id="theme-toggle" class="icon-btn" aria-label="Alternar tema">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="theme-icon">
@@ -41,39 +40,10 @@
 
   <main id="main">
 
-    <!-- ============ VISÃO ============ -->
     <section id="visao" class="section section--first">
       <div class="hero">
-        <p class="eyebrow">Roteiro · 3 dias</p>
-        <h1 class="hero-title">Buenos Aires, Lourenço &amp; Bia.</h1>
-        <p class="hero-sub">15 → 17 maio. Vain Boutique Hotel, Palermo Soho.</p>
-
-        <div class="countdown" id="countdown" hidden>
-          <div class="cd-num"><span id="cd-d">0</span><small>d</small></div>
-          <div class="cd-num"><span id="cd-h">0</span><small>h</small></div>
-          <div class="cd-num"><span id="cd-m">0</span><small>m</small></div>
-          <span class="cd-label" id="cd-label">até embarcar</span>
-        </div>
-      </div>
-
-      <!-- Eventos chave em uma linha horizontal -->
-      <div class="key-strip">
-        <div class="key-item key-item--star">
-          <span class="key-time">Sáb 15h</span>
-          <span class="key-title">Don Julio</span>
-        </div>
-        <div class="key-item key-item--star">
-          <span class="key-time">Dom 15h</span>
-          <span class="key-title">El Preferido</span>
-        </div>
-        <div class="key-item">
-          <span class="key-time">Sáb 20:30</span>
-          <span class="key-title">Florería</span>
-        </div>
-        <div class="key-item key-item--alert">
-          <span class="key-time">Dom 18:15</span>
-          <span class="key-title">Sair p/ aero</span>
-        </div>
+        <h1 class="hero-title">Buenos Aires,<br>Lourenço &amp; Bia.</h1>
+        <p class="hero-sub">3 dias em Palermo Soho. Vain Boutique Hotel.</p>
       </div>
 
       <div class="now-card" id="now-card" hidden>
@@ -86,7 +56,7 @@
 
       <div class="progress-card" id="progress-card">
         <div class="progress-head">
-          <strong>Progresso do roteiro</strong>
+          <span>Progresso</span>
           <span id="progress-count">0 / 0</span>
         </div>
         <div class="progress-track">
@@ -95,53 +65,43 @@
       </div>
     </section>
 
-    <!-- ============ ROTEIRO ============ -->
     <section id="roteiro" class="section">
       <header class="section-head">
         <h2>Roteiro</h2>
         <button id="reset-checks" class="ghost-btn">Limpar</button>
       </header>
-
       <div class="day-tabs" id="day-tabs"></div>
-      <div id="roteiro-container" class="roteiro-container"></div>
+      <div id="roteiro-container"></div>
     </section>
 
-    <!-- ============ COMER ============ -->
     <section id="comer" class="section">
       <header class="section-head"><h2>Comer</h2></header>
-
-      <div class="filter-bar">
-        <select id="filter-tipo" class="select-pill" aria-label="Filtrar por tipo">
-          <option value="all">Todos os tipos</option>
-          <option value="parrilla">🥩 Parrilla</option>
-          <option value="bodegon">🍴 Bodegón</option>
-          <option value="japa">🍣 Japa</option>
-          <option value="italiana">🍝 Italiana</option>
-        </select>
-        <select id="filter-reserva" class="select-pill" aria-label="Filtrar por reserva">
-          <option value="all">Qualquer reserva</option>
-          <option value="confirmada">Confirmada</option>
-          <option value="precisa">Precisa reservar</option>
-          <option value="walkin">Walk-in</option>
-        </select>
-      </div>
-
+      <select id="filter-tipo" class="select-pill" aria-label="Filtrar por tipo">
+        <option value="all">Todos</option>
+        <option value="parrilla">🥩 Parrilla</option>
+        <option value="bodegon">🍴 Bodegón</option>
+        <option value="japa">🍣 Japa</option>
+        <option value="italiana">🍝 Italiana</option>
+      </select>
       <div id="restaurantes-grid" class="card-grid"></div>
     </section>
 
-    <!-- ============ CAFÉS ============ -->
     <section id="cafes" class="section">
       <header class="section-head"><h2>Cafés</h2></header>
       <div id="cafes-grid" class="card-grid"></div>
     </section>
 
-    <!-- ============ BARES ============ -->
+    <section id="compras" class="section">
+      <header class="section-head"><h2>Compras (Bia)</h2></header>
+      <p class="section-intro">5 lojas curadas em Palermo Soho. Caminháveis em ~2h. Sábado 18h-20h.</p>
+      <div id="compras-grid" class="card-grid"></div>
+    </section>
+
     <section id="bares" class="section">
-      <header class="section-head"><h2>Bares &amp; baladas</h2></header>
+      <header class="section-head"><h2>Bares</h2></header>
       <div id="bares-grid" class="card-grid"></div>
     </section>
 
-    <!-- ============ MAPA ============ -->
     <section id="mapa" class="section">
       <header class="section-head"><h2>Mapa</h2></header>
       <div id="map" class="map-box"></div>
@@ -151,26 +111,14 @@
       </details>
     </section>
 
-    <!-- ============ LOGÍSTICA ============ -->
     <section id="logistica" class="section">
       <header class="section-head"><h2>Logística</h2></header>
-      <div id="logistica-container" class="logistica-container"></div>
-
-      <details class="dist-details">
-        <summary>Distâncias do hotel</summary>
-        <div class="table-wrap">
-          <table id="distancias-table" class="distancias">
-            <thead><tr><th>Lugar</th><th>A pé</th><th>Carro</th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </details>
+      <div id="logistica-container"></div>
     </section>
 
     <div class="footer-spacer"></div>
   </main>
 
-  <!-- ============ BOTTOM NAV ============ -->
   <nav class="bottomnav" aria-label="Navegação">
     <a href="#visao" data-nav class="bn active">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
@@ -194,15 +142,14 @@
     </button>
   </nav>
 
-  <!-- Mini-menu "Mais" -->
   <div class="more-sheet" id="more-sheet" hidden>
     <a href="#cafes" data-nav class="more-link">☕ Cafés</a>
+    <a href="#compras" data-nav class="more-link">🛍️ Compras</a>
     <a href="#bares" data-nav class="more-link">🍸 Bares</a>
     <a href="#logistica" data-nav class="more-link">🧳 Logística</a>
   </div>
   <div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
 
-  <!-- ============ BOTTOM SHEET de detalhe do lugar ============ -->
   <div class="detail-sheet" id="detail-sheet" hidden>
     <button class="detail-close" id="detail-close" aria-label="Fechar">×</button>
     <div class="detail-body" id="detail-body"></div>

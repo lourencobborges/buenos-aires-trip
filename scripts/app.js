@@ -4,11 +4,11 @@
 // "Mais" menu, filtros, tema, countdown, progress bar, modo "agora".
 // =====================================================================
 
-import { LUGARES, ROTEIRO, LOGISTICA, DISTANCIAS, VIAGEM } from "./data.js";
+import { LUGARES, ROTEIRO, LOGISTICA, VIAGEM } from "./data.js";
 import { storage, theme as themeStore } from "./storage.js";
 import {
-  renderRestaurantes, renderCafes, renderBares,
-  renderRoteiro, renderLogistica, renderDistancias,
+  renderRestaurantes, renderCafes, renderBares, renderCompras,
+  renderRoteiro, renderLogistica,
   lugarDetalheHTML,
 } from "./render.js";
 import { initMap, renderLegenda } from "./map.js";
@@ -27,8 +27,8 @@ function renderAll() {
   renderRestaurantes();
   renderCafes();
   renderBares();
+  renderCompras();
   renderLogistica(LOGISTICA);
-  renderDistancias(DISTANCIAS);
   renderLegenda("map-legenda");
   updateProgress();
 }
@@ -38,12 +38,12 @@ function renderAll() {
 // ---------------------------------------------------------------------
 function initNav() {
   const links = $$("[data-nav]");
-  const sectionIds = ["visao", "roteiro", "comer", "cafes", "bares", "mapa", "logistica"];
+  const sectionIds = ["visao", "roteiro", "comer", "cafes", "compras", "bares", "mapa", "logistica"];
   const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
 
   // Mapeia cada seção pro link mais próximo (alguns links representam várias seções)
   function linkParaSecao(id) {
-    if (["cafes", "bares", "logistica"].includes(id)) return links.find(l => l.id === "more-btn") || null;
+    if (["cafes", "bares", "compras", "logistica"].includes(id)) return links.find(l => l.id === "more-btn") || null;
     return links.find(l => l.getAttribute("href") === "#" + id) || null;
   }
 
@@ -138,16 +138,14 @@ function updateProgress() {
 // 5. FILTROS — selects
 // ---------------------------------------------------------------------
 function initFilters() {
-  const state = { tipo: "all", reserva: "all" };
-  const apply = () => {
+  const el = $("#filter-tipo");
+  if (!el) return;
+  el.addEventListener("change", e => {
+    const tipo = e.target.value;
     $$("#restaurantes-grid .lugar-card").forEach(card => {
-      const okT = state.tipo === "all" || card.dataset.tipo === state.tipo;
-      const okR = state.reserva === "all" || card.dataset.reserva === state.reserva;
-      card.style.display = okT && okR ? "" : "none";
+      card.style.display = tipo === "all" || card.dataset.tipo === tipo ? "" : "none";
     });
-  };
-  $("#filter-tipo").addEventListener("change", e => { state.tipo = e.target.value; apply(); });
-  $("#filter-reserva").addEventListener("change", e => { state.reserva = e.target.value; apply(); });
+  });
 }
 
 // ---------------------------------------------------------------------
@@ -248,42 +246,7 @@ function refreshThemeIcon(t) {
 }
 
 // ---------------------------------------------------------------------
-// 9. COUNTDOWN — só aparece a partir de uns dias antes
-// ---------------------------------------------------------------------
-function initCountdown() {
-  const alvoIda = new Date(VIAGEM.dataIda).getTime();
-  const alvoVolta = new Date(VIAGEM.dataVolta).getTime();
-  const cd = $("#countdown");
-
-  function tick() {
-    const agora = Date.now();
-    const alvo = agora < alvoIda ? alvoIda : alvoVolta;
-    const label = agora < alvoIda ? "até embarcar" : "até decolar de volta";
-    const diff = Math.max(0, alvo - agora);
-
-    // Só mostra se faltar menos de 30 dias
-    if (diff > 30 * 86400000) {
-      cd.hidden = true;
-      return;
-    }
-    cd.hidden = false;
-
-    const dias = Math.floor(diff / 86400000);
-    const horas = Math.floor((diff / 3600000) % 24);
-    const min = Math.floor((diff / 60000) % 60);
-
-    $("#cd-d").textContent = dias;
-    $("#cd-h").textContent = horas;
-    $("#cd-m").textContent = min;
-    $("#cd-label").textContent = label;
-  }
-
-  tick();
-  setInterval(tick, 30000);
-}
-
-// ---------------------------------------------------------------------
-// 10. MODO AGORA
+// 9. MODO AGORA
 // ---------------------------------------------------------------------
 function initNowMode() {
   const card = $("#now-card");
@@ -331,7 +294,6 @@ function boot() {
   initDetailSheet();
   initMoreSheet();
   initTheme();
-  initCountdown();
   initNowMode();
   initMap("map", LUGARES, VIAGEM.hotel);
 }

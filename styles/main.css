@@ -1,0 +1,680 @@
+/* =====================================================================
+   PALETA + VARIÁVEIS
+   Tons quentes argentinos: bege/creme de fundo, bordeaux pra acentos,
+   marrom pra textos. Dark mode invertido.
+   ===================================================================== */
+
+:root {
+  --bg: #f6efe3;
+  --bg-soft: #ede2cc;
+  --card: #fffaf0;
+  --ink: #3a2a1a;
+  --ink-soft: #6b5944;
+  --accent: #7a2a2a;       /* bordeaux argentino */
+  --accent-soft: #a13b2a;
+  --gold: #b8841b;
+  --green: #2d6a4f;
+  --line: #e2d4b9;
+  --shadow: 0 2px 8px rgba(58, 42, 26, 0.08), 0 8px 24px rgba(58, 42, 26, 0.04);
+  --radius: 14px;
+  --radius-sm: 10px;
+  --max-w: 980px;
+
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+[data-theme="dark"] {
+  --bg: #1a1410;
+  --bg-soft: #241b14;
+  --card: #2a2018;
+  --ink: #f0e6d2;
+  --ink-soft: #b8a890;
+  --accent: #d96846;
+  --accent-soft: #e8855a;
+  --gold: #e0b04a;
+  --green: #5dbb88;
+  --line: #3a2e22;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* =====================================================================
+   RESET LEVE + BASE
+   ===================================================================== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 40px;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+button { font-family: inherit; cursor: pointer; }
+
+/* =====================================================================
+   HEADER + NAV FIXA
+   ===================================================================== */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  padding: 12px 16px 0;
+  backdrop-filter: blur(8px);
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.brand-title {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.brand-sub {
+  display: block;
+  font-size: 11px;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.icon-btn {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  width: 38px;
+  height: 38px;
+  font-size: 18px;
+  display: grid;
+  place-items: center;
+  transition: transform 0.15s ease;
+}
+.icon-btn:active { transform: scale(0.92); }
+
+.nav {
+  display: flex;
+  overflow-x: auto;
+  gap: 6px;
+  padding: 10px 0 8px;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  scrollbar-width: none;
+}
+.nav::-webkit-scrollbar { display: none; }
+
+.nav-link {
+  flex: 0 0 auto;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.nav-link.active {
+  background: var(--accent);
+  color: white;
+}
+.nav-link:hover { text-decoration: none; }
+
+/* =====================================================================
+   SEÇÕES
+   ===================================================================== */
+.section {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 28px 16px 8px;
+  scroll-margin-top: 110px;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.section-head h2 {
+  font-size: 26px;
+}
+
+.sub-head {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  margin: 24px 0 10px;
+  color: var(--ink-soft);
+}
+
+.ghost-btn {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+.ghost-btn:hover { background: var(--bg-soft); }
+
+/* =====================================================================
+   HERO + COUNTDOWN (visão geral)
+   ===================================================================== */
+.hero-card {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-soft) 100%);
+  color: white;
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: var(--shadow);
+  margin-bottom: 18px;
+}
+
+.hero-tag {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.18);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.hero-title {
+  font-size: 28px;
+  margin-bottom: 4px;
+  color: white;
+}
+
+.hero-sub {
+  margin: 0 0 18px;
+  opacity: 0.92;
+  font-size: 14px;
+}
+
+.countdown {
+  display: flex;
+  gap: 10px;
+}
+
+.cd-box {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-sm);
+  padding: 10px 4px;
+  text-align: center;
+}
+.cd-box span {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+}
+.cd-box small {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+}
+
+.countdown-label {
+  text-align: center;
+  margin: 8px 0 0;
+  font-size: 13px;
+  opacity: 0.9;
+  font-style: italic;
+}
+
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.quick-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.quick-card strong { font-size: 14px; }
+.quick-card span { font-size: 13px; color: var(--ink-soft); }
+.quick-icon { font-size: 20px; margin-bottom: 4px; }
+
+.now-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--green);
+  color: white;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  box-shadow: var(--shadow);
+  animation: slideUp 0.3s ease;
+}
+.now-pulse {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6);
+  animation: pulse 1.6s infinite;
+  flex: 0 0 12px;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.6); }
+  70% { box-shadow: 0 0 0 12px rgba(255, 255, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =====================================================================
+   ROTEIRO — dias expansíveis
+   ===================================================================== */
+.dia {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.dia-head {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  color: var(--ink);
+}
+
+.dia-titulo {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.dia-sub {
+  font-size: 12px;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+.chevron {
+  transition: transform 0.2s ease;
+  color: var(--accent);
+  font-size: 18px;
+}
+.dia[data-open="true"] .chevron { transform: rotate(180deg); }
+
+.dia-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+.dia[data-open="true"] .dia-body { max-height: 4000px; }
+
+.dia-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 18px;
+  border-top: 1px solid var(--line);
+  align-items: flex-start;
+}
+
+.dia-item input[type="checkbox"] {
+  margin-top: 4px;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  flex: 0 0 18px;
+}
+
+.dia-item.done .dia-item-title,
+.dia-item.done .dia-item-desc {
+  text-decoration: line-through;
+  opacity: 0.55;
+}
+
+.dia-item-hora {
+  font-weight: 600;
+  color: var(--accent);
+  font-size: 13px;
+  flex: 0 0 50px;
+}
+
+.dia-item-body { flex: 1; min-width: 0; }
+
+.dia-item-title {
+  font-weight: 600;
+  font-size: 15px;
+}
+.dia-item.destaque .dia-item-title { color: var(--accent); }
+
+.dia-item-desc {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+.dia-item-actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mini-btn {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: var(--ink);
+  font-weight: 500;
+}
+.mini-btn:hover { background: var(--accent); color: white; }
+
+/* =====================================================================
+   CARDS (restaurantes, cafés, bares)
+   ===================================================================== */
+.filter-row {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 4px 0 10px;
+  scrollbar-width: none;
+}
+.filter-row::-webkit-scrollbar { display: none; }
+
+.chip {
+  flex: 0 0 auto;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--ink);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.chip.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.lugar-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease;
+}
+.lugar-card:active { transform: scale(0.99); }
+
+.lugar-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.lugar-nome {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lugar-star { color: var(--gold); }
+
+.lugar-tipo {
+  display: inline-block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+.badge-reserva {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.lugar-endereco {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-top: 8px;
+}
+
+.lugar-notas {
+  font-size: 13px;
+  color: var(--ink);
+  margin-top: 8px;
+  line-height: 1.45;
+}
+
+.lugar-indicacao {
+  font-size: 11px;
+  color: var(--ink-soft);
+  font-style: italic;
+  margin-top: 10px;
+  letter-spacing: 0.02em;
+}
+
+.pedido-list {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  font-size: 13px;
+  color: var(--ink);
+}
+.pedido-list li { margin-bottom: 3px; }
+
+.lugar-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* =====================================================================
+   COMPRAS
+   ===================================================================== */
+.compras-container { display: flex; flex-direction: column; gap: 16px; }
+
+.compras-grupo {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+}
+
+.compras-grupo h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: var(--accent);
+}
+
+.compras-item {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+}
+.compras-item:first-of-type { border-top: none; }
+
+.compras-item strong { font-size: 14px; }
+.compras-item span { font-size: 13px; color: var(--ink-soft); }
+
+/* =====================================================================
+   MAPA
+   ===================================================================== */
+.map-box {
+  height: 420px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--line);
+}
+
+.legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.legenda-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.legenda-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex: 0 0 10px;
+}
+
+/* Pin customizado no mapa */
+.map-pin {
+  width: 28px; height: 28px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  border: 2px solid white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+  display: grid;
+  place-items: center;
+}
+.map-pin span { transform: rotate(45deg); font-size: 14px; }
+
+/* =====================================================================
+   LOGÍSTICA
+   ===================================================================== */
+.logistica-container { display: flex; flex-direction: column; gap: 12px; }
+
+.logistica-grupo {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  box-shadow: var(--shadow);
+}
+
+.logistica-grupo h3 {
+  font-size: 15px;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.logistica-grupo ul {
+  margin: 0; padding-left: 18px;
+  font-size: 13px; color: var(--ink);
+}
+.logistica-grupo li { margin-bottom: 4px; }
+
+.table-wrap {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.distancias {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.distancias th,
+.distancias td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+.distancias th {
+  background: var(--bg-soft);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+}
+.distancias tr:last-child td { border-bottom: none; }
+
+/* =====================================================================
+   FOOTER
+   ===================================================================== */
+.footer {
+  text-align: center;
+  padding: 32px 16px 16px;
+  color: var(--ink-soft);
+  font-size: 12px;
+}

@@ -1,0 +1,49 @@
+/* =====================================================================
+   RESPONSIVO — mobile-first é o base em main.css.
+   Aqui só os breakpoints up (tablet/desktop).
+   ===================================================================== */
+
+@media (min-width: 600px) {
+  .quick-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nav { gap: 10px; }
+}
+
+@media (min-width: 900px) {
+  .header { padding: 14px 24px 0; }
+  .section { padding: 36px 24px 12px; }
+
+  .quick-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .hero-title { font-size: 32px; }
+
+  .section-head h2 { font-size: 30px; }
+
+  .map-box { height: 520px; }
+}
+
+/* Respeita preferência do sistema, mas só na primeira carga.
+   O toggle manual sobrescreve via data-theme="..." no body. */
+@media (prefers-color-scheme: dark) {
+  body:not([data-theme]) {
+    background: #1a1410;
+    color: #f0e6d2;
+  }
+}
+
+/* Reduz animações pra quem prefere */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}

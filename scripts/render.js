@@ -1,12 +1,12 @@
 // =====================================================================
-// RENDER — funções puras que recebem dados e devolvem HTML.
-// Toda manipulação visual passa por aqui pra deixar app.js limpo.
+// RENDER — produz HTML das listas e do bottom-sheet de detalhe.
+// Cards são compactos por padrão: nome + tipo + bairro + reserva.
+// Tap abre o sheet com endereço, notas, sugestões e ações.
 // =====================================================================
 
 import { LUGARES, TIPO_META, RESERVA_META, VIAGEM } from "./data.js";
 import { storage } from "./storage.js";
 
-// Helper: HTML-escape pra evitar XSS em campos do data.js.
 function esc(s) {
   if (s == null) return "";
   return String(s)
@@ -16,22 +16,73 @@ function esc(s) {
     .replaceAll('"', "&quot;");
 }
 
-// Link "Como chegar" — Google Maps direções do hotel até o destino
 function linkComoChegar(coords) {
   const [hLat, hLng] = VIAGEM.hotel.coords;
   const [lat, lng] = coords;
   return `https://www.google.com/maps/dir/?api=1&origin=${hLat},${hLng}&destination=${lat},${lng}`;
 }
 
+function linkMapsLugar(coords, nome) {
+  const [lat, lng] = coords;
+  return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${encodeURIComponent(nome)}`;
+}
+
 // ---------------------------------------------------------------------
-// CARD DE LUGAR — usado em restaurantes, cafés, bares
+// CARD compacto — usado em listas. Tap delega no app.js pra abrir sheet.
 // ---------------------------------------------------------------------
 export function lugarCardHTML(l) {
-  const meta = TIPO_META[l.tipo] || { icone: "📍", label: l.tipo, cor: "#888" };
-  const resMeta = RESERVA_META[l.reserva] || { label: l.reserva, cor: "#888" };
+  const meta = TIPO_META[l.tipo] || { icone: "📍", label: l.tipo };
+  const resMeta = RESERVA_META[l.reserva] || { label: l.reserva };
+
+  return `
+    <article class="lugar-card ${l.destaque ? "destaque" : ""}"
+             data-tipo="${esc(l.tipo)}"
+             data-reserva="${esc(l.reserva)}"
+             data-lugar-id="${esc(l.id)}">
+      <div class="lugar-head">
+        <div>
+          <div class="lugar-nome">
+            <span class="lugar-icon">${meta.icone}</span>
+            ${esc(l.nome)}
+            ${l.destaque ? '<span class="lugar-star">★</span>' : ""}
+          </div>
+          <div class="lugar-meta">
+            <span>${esc(meta.label)}</span>
+            <span class="dot"></span>
+            <span>${esc(l.bairro)}</span>
+          </div>
+        </div>
+        <span class="reserva-pill" data-r="${esc(l.reserva)}">
+          ${esc(resMeta.label)}
+        </span>
+      </div>
+    </article>
+  `;
+}
+
+// ---------------------------------------------------------------------
+// DETALHE — preenche o bottom-sheet quando o usuário toca num card.
+// ---------------------------------------------------------------------
+export function lugarDetalheHTML(id) {
+  const l = LUGARES.find(x => x.id === id);
+  if (!l) return "";
+  const meta = TIPO_META[l.tipo] || { icone: "📍", label: l.tipo };
+  const resMeta = RESERVA_META[l.reserva] || { label: l.reserva };
 
   const pedido = l.pedidoSugerido
-    ? `<ul class="pedido-list">${l.pedidoSugerido.map(p => `<li>${esc(p)}</li>`).join("")}</ul>`
+    ? `
+      <div class="detail-section">
+        <h4>Sugestões de pedido</h4>
+        <ul>${l.pedidoSugerido.map(p => `<li>${esc(p)}</li>`).join("")}</ul>
+      </div>`
+    : "";
+
+  const notas = l.notas
+    ? `
+      <div class="detail-section">
+        <h4>Notas</h4>
+        <p>${esc(l.notas)}</p>
+      </div>`
     : "";
 
   const wa = l.telefone
@@ -39,122 +90,116 @@ export function lugarCardHTML(l) {
     : "";
 
   return `
-    <article class="lugar-card" data-tipo="${esc(l.tipo)}" data-reserva="${esc(l.reserva)}">
-      <div class="lugar-head">
-        <div>
-          <div class="lugar-nome">
-            ${meta.icone} ${esc(l.nome)}
-            ${l.destaque ? '<span class="lugar-star">★</span>' : ""}
-          </div>
-          <div class="lugar-tipo">${esc(meta.label)} · ${esc(l.bairro)}</div>
-        </div>
-        <span class="badge-reserva" style="background:${resMeta.cor}; color:white;">
-          ${esc(resMeta.label)}
-        </span>
-      </div>
+    <div class="detail-meta">${meta.icone} ${esc(meta.label)} · ${esc(l.bairro)}
+      &nbsp;·&nbsp;<span style="color:var(--ink-2)">${esc(resMeta.label)}</span></div>
+    <h3 class="detail-name">${esc(l.nome)} ${l.destaque ? '<span class="lugar-star">★</span>' : ""}</h3>
 
-      <div class="lugar-endereco">📍 ${esc(l.endereco)}</div>
+    <div class="detail-section">
+      <h4>Endereço</h4>
+      <p>${esc(l.endereco)}</p>
+    </div>
 
-      ${l.notas ? `<div class="lugar-notas">${esc(l.notas)}</div>` : ""}
-      ${pedido}
+    ${notas}
+    ${pedido}
 
-      <div class="lugar-actions">
-        <a class="mini-btn" href="${linkComoChegar(l.coords)}" target="_blank" rel="noopener">Como chegar</a>
-        ${wa}
-      </div>
+    <div class="detail-actions">
+      <a class="mini-btn mini-btn--primary" href="${linkComoChegar(l.coords)}" target="_blank" rel="noopener">Como chegar</a>
+      <a class="mini-btn" href="${linkMapsLugar(l.coords, l.nome)}" target="_blank" rel="noopener">Ver no mapa</a>
+      ${wa}
+    </div>
 
-      ${l.indicacao ? `<div class="lugar-indicacao">Indicado por: ${esc(l.indicacao)}</div>` : ""}
-    </article>
+    ${l.indicacao ? `<div class="detail-indicacao">Indicado por: ${esc(l.indicacao)}</div>` : ""}
   `;
 }
 
 // ---------------------------------------------------------------------
-// LISTAS POR SEÇÃO — filtram LUGARES por tipo
+// LISTAS por categoria
 // ---------------------------------------------------------------------
-
 export function renderRestaurantes() {
   const tipos = ["parrilla", "bodegon", "japa", "italiana", "judaica", "burger"];
   const lista = LUGARES.filter(l => tipos.includes(l.tipo));
-  document.getElementById("restaurantes-grid").innerHTML =
-    lista.map(lugarCardHTML).join("");
+  document.getElementById("restaurantes-grid").innerHTML = lista.map(lugarCardHTML).join("");
 }
 
 export function renderCafes() {
   const lista = LUGARES.filter(l => l.tipo === "cafe");
-  document.getElementById("cafes-grid").innerHTML =
-    lista.map(lugarCardHTML).join("");
+  document.getElementById("cafes-grid").innerHTML = lista.map(lugarCardHTML).join("");
 }
 
 export function renderBares() {
   const lista = LUGARES.filter(l => l.tipo === "bar" || l.tipo === "balada");
-  document.getElementById("bares-grid").innerHTML =
-    lista.map(lugarCardHTML).join("");
+  document.getElementById("bares-grid").innerHTML = lista.map(lugarCardHTML).join("");
 }
 
 // ---------------------------------------------------------------------
-// ROTEIRO — dia accordion com checkboxes persistidos
+// ROTEIRO — tabs de dia + lista com checkbox custom
 // ---------------------------------------------------------------------
 
-export function renderRoteiro(roteiro) {
-  const container = document.getElementById("roteiro-container");
-  container.innerHTML = roteiro.map((dia, idx) => {
-    const itensHTML = dia.itens.map((item, i) => {
-      const id = `dia${idx}-item${i}`;
-      const checked = storage.get(id) ? "checked" : "";
-      const doneClass = storage.get(id) ? "done" : "";
+// Ícone SVG do "check" preenchido — pequeno, vai dentro do círculo
+const CHECK_SVG = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
 
-      // Se o item tem lugarId, gera botão "Como chegar"
+export function renderRoteiro(roteiro) {
+  // Tabs
+  const tabs = roteiro.map((dia, idx) => {
+    const partes = dia.dia.split(" "); // ex: "Sexta 15/05"
+    return `
+      <button class="day-tab" data-day-tab="${idx}" data-active="${idx === 0}">
+        <small>${esc(partes[0])}</small>
+        ${esc(partes[1] || "")}
+      </button>
+    `;
+  }).join("");
+  document.getElementById("day-tabs").innerHTML = tabs;
+
+  // Conteúdo de cada dia
+  const dias = roteiro.map((dia, idx) => {
+    const itens = dia.itens.map((item, i) => {
+      const id = `dia${idx}-item${i}`;
+      const checked = storage.get(id);
       const lugar = item.lugarId ? LUGARES.find(l => l.id === item.lugarId) : null;
+
       const acoes = lugar
-        ? `<div class="dia-item-actions">
-             <a class="mini-btn" href="${linkComoChegar(lugar.coords)}" target="_blank" rel="noopener">Como chegar</a>
-             <a class="mini-btn" href="#${lugar.tipo === "cafe" ? "cafes" : lugar.tipo === "bar" || lugar.tipo === "balada" ? "bares" : "restaurantes"}">Ver card →</a>
-           </div>`
+        ? `
+          <div class="item-actions">
+            <a class="mini-btn mini-btn--primary" href="${linkComoChegar(lugar.coords)}" target="_blank" rel="noopener" data-stop>Como chegar</a>
+            <button class="mini-btn" data-open-detail="${esc(lugar.id)}">Ver detalhes</button>
+          </div>`
         : "";
 
       return `
-        <label class="dia-item ${doneClass} ${item.destaque ? "destaque" : ""}" data-item-id="${id}">
-          <input type="checkbox" data-check="${id}" ${checked} />
-          <span class="dia-item-hora">${esc(item.hora)}</span>
-          <div class="dia-item-body">
-            <div class="dia-item-title">${esc(item.titulo)}</div>
-            ${item.desc ? `<div class="dia-item-desc">${esc(item.desc)}</div>` : ""}
+        <div class="dia-item ${checked ? "done" : ""} ${item.destaque ? "destaque" : ""}"
+             data-check-id="${id}"
+             data-open="false">
+          <div class="checkbox" data-toggle-check>${CHECK_SVG}</div>
+          <div class="item-time">${esc(item.hora)}</div>
+          <div class="item-body">
+            <div class="item-title">${esc(item.titulo)}</div>
+            ${item.desc ? `<div class="item-desc">${esc(item.desc)}</div>` : ""}
             ${acoes}
           </div>
-        </label>
+        </div>
       `;
     }).join("");
 
-    // Primeiro dia abre por default
-    const open = idx === 0 ? "true" : "false";
-
     return `
-      <div class="dia" data-dia-idx="${idx}" data-open="${open}">
-        <button class="dia-head" data-toggle-dia="${idx}">
-          <div>
-            <div class="dia-titulo">${esc(dia.dia)}</div>
-            <div class="dia-sub">${esc(dia.titulo)}</div>
-          </div>
-          <span class="chevron">▾</span>
-        </button>
-        <div class="dia-body">
-          ${itensHTML}
-        </div>
+      <div class="dia" data-dia-idx="${idx}" data-active="${idx === 0}">
+        ${itens}
       </div>
     `;
   }).join("");
+
+  document.getElementById("roteiro-container").innerHTML = dias;
 }
 
 // ---------------------------------------------------------------------
-// COMPRAS — agrupado
+// COMPRAS
 // ---------------------------------------------------------------------
-
 export function renderCompras(compras) {
   const grupos = [
     { titulo: "Moda feminina", chave: "modaFeminina" },
     { titulo: "Couro argentino", chave: "couro" },
-    { titulo: "Áreas de compras", chave: "areas" },
-    { titulo: "Feiras e mercados", chave: "feiras" },
+    { titulo: "Áreas pra circular", chave: "areas" },
+    { titulo: "Feiras", chave: "feiras" },
     { titulo: "Vinhos", chave: "vinhos" },
   ];
 
@@ -174,7 +219,6 @@ export function renderCompras(compras) {
 // ---------------------------------------------------------------------
 // LOGÍSTICA + DISTÂNCIAS
 // ---------------------------------------------------------------------
-
 export function renderLogistica(logistica) {
   document.getElementById("logistica-container").innerHTML = logistica.map(g => `
     <div class="logistica-grupo">

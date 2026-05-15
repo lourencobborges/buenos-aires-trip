@@ -384,7 +384,7 @@ export const ROTEIRO = [
       { hora: "14:00", lugarId: null, titulo: "Uber de volta pra Palermo", desc: "" },
       { hora: "14:30", lugarId: null, titulo: "Hotel, refresca e troca", desc: "" },
       { hora: "15:00", lugarId: "don-julio", titulo: "🥩 DON JULIO (RESERVADO)", desc: "Chegar 14:50. Ver sugestões de pedido no card do lugar.", destaque: true },
-      { hora: "17:30", lugarId: null, titulo: "Sesta argentina no hotel", desc: "Obrigatória depois do Don Julio." },
+      { hora: "17:30", lugarId: null, titulo: "Descansar antes do Florería", desc: "Opções: cochilo no hotel, banho longo, passeio leve por Palermo Soho (Honduras/El Salvador), café no Cuervo ou drink no Tres Monos. Saída pro Florería 20:00-20:30." },
       { hora: "20:30", lugarId: "floreria", titulo: "🍸 Florería Atlántico (walk-in)", desc: "Chegar 20:30 pra evitar fila. ~2-2h30 no local.", destaque: true },
       { hora: "23:00", lugarId: null, titulo: "Pós-Florería — escolher", desc: "1) Norimoto (japa) 2) CoChinChina (bar) 3) Uptown (balada) 4) Hotel." },
     ],

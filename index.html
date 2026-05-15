@@ -3,107 +3,93 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#7a2a2a" />
-  <title>Buenos Aires 15-17/05 · Lourenço + Bia</title>
+  <meta name="theme-color" content="#1a1410" />
+  <title>Buenos Aires · Lourenço & Bia</title>
   <meta name="description" content="Roteiro interativo da viagem a Buenos Aires de 15 a 17 de maio de 2026." />
 
-  <!-- Fontes: serif elegante pros títulos + sans legível pro corpo -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <!-- Leaflet (mapa) -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 
-  <!-- Estilos próprios -->
   <link rel="stylesheet" href="styles/main.css" />
   <link rel="stylesheet" href="styles/responsive.css" />
 
-  <!-- PWA -->
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="assets/icons/icon-192.png" />
   <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
 </head>
 <body data-theme="light">
 
-  <!-- ============ HEADER + NAV ============ -->
-  <header class="header">
-    <div class="header-row">
+  <!-- ============ TOP BAR — minimal ============ -->
+  <header class="topbar">
+    <div class="topbar-inner">
       <div class="brand">
         <span class="brand-title">Buenos Aires</span>
-        <span class="brand-sub">15 → 17 maio · Lourenço &amp; Bia</span>
+        <span class="brand-dates" id="brand-dates">15 → 17 maio</span>
       </div>
-      <button id="theme-toggle" class="icon-btn" aria-label="Alternar tema">🌙</button>
+      <button id="theme-toggle" class="icon-btn" aria-label="Alternar tema">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="theme-icon">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
     </div>
-
-    <nav class="nav" aria-label="Navegação principal">
-      <a href="#visao" data-nav class="nav-link active">Visão</a>
-      <a href="#roteiro" data-nav class="nav-link">Roteiro</a>
-      <a href="#restaurantes" data-nav class="nav-link">Comer</a>
-      <a href="#cafes" data-nav class="nav-link">Cafés</a>
-      <a href="#bares" data-nav class="nav-link">Bares</a>
-      <a href="#compras" data-nav class="nav-link">Compras</a>
-      <a href="#mapa" data-nav class="nav-link">Mapa</a>
-      <a href="#logistica" data-nav class="nav-link">Logística</a>
-    </nav>
   </header>
 
-  <main>
+  <main id="main">
 
-    <!-- ============ VISÃO GERAL ============ -->
-    <section id="visao" class="section">
-      <div class="hero-card">
-        <div class="hero-tag">3 dias · Palermo Soho</div>
-        <h1 class="hero-title">Vain Boutique Hotel</h1>
-        <p class="hero-sub">Thames 2226, Palermo Soho — base de operações</p>
+    <!-- ============ VISÃO ============ -->
+    <section id="visao" class="section section--first">
+      <div class="hero">
+        <p class="eyebrow">Roteiro · 3 dias</p>
+        <h1 class="hero-title">Palermo, parrillas &amp; sobremesa.</h1>
+        <p class="hero-sub">Vain Boutique Hotel — Thames 2226, Palermo Soho.</p>
 
-        <div class="countdown" id="countdown">
-          <div class="cd-box"><span id="cd-d">--</span><small>dias</small></div>
-          <div class="cd-box"><span id="cd-h">--</span><small>horas</small></div>
-          <div class="cd-box"><span id="cd-m">--</span><small>min</small></div>
+        <div class="countdown" id="countdown" hidden>
+          <div class="cd-num"><span id="cd-d">0</span><small>d</small></div>
+          <div class="cd-num"><span id="cd-h">0</span><small>h</small></div>
+          <div class="cd-num"><span id="cd-m">0</span><small>m</small></div>
+          <span class="cd-label" id="cd-label">até embarcar</span>
         </div>
-        <p class="countdown-label" id="cd-label">até decolar</p>
       </div>
 
-      <div class="quick-grid">
-        <div class="quick-card">
-          <div class="quick-icon">✈️</div>
-          <strong>Ida</strong>
-          <span>Sex 15/05 · 21:45 EZE</span>
+      <!-- Eventos chave em uma linha horizontal -->
+      <div class="key-strip">
+        <div class="key-item key-item--star">
+          <span class="key-time">Sáb 15h</span>
+          <span class="key-title">Don Julio</span>
         </div>
-        <div class="quick-card">
-          <div class="quick-icon">🛬</div>
-          <strong>Volta</strong>
-          <span>Dom 17/05 · 21:55 EZE</span>
+        <div class="key-item key-item--star">
+          <span class="key-time">Dom 15h</span>
+          <span class="key-title">El Preferido</span>
         </div>
-        <div class="quick-card">
-          <div class="quick-icon">🏨</div>
-          <strong>Check-in</strong>
-          <span>Sex ~23:30</span>
+        <div class="key-item">
+          <span class="key-time">Sáb 20:30</span>
+          <span class="key-title">Florería</span>
         </div>
-        <div class="quick-card">
-          <div class="quick-icon">🥩</div>
-          <strong>Don Julio</strong>
-          <span>Sáb 15h ✅</span>
-        </div>
-        <div class="quick-card">
-          <div class="quick-icon">🥩</div>
-          <strong>El Preferido</strong>
-          <span>Dom 15h ✅</span>
-        </div>
-        <div class="quick-card">
-          <div class="quick-icon">🚕</div>
-          <strong>Sair do hotel</strong>
-          <span>Dom 18:15 MAX</span>
+        <div class="key-item key-item--alert">
+          <span class="key-time">Dom 18:15</span>
+          <span class="key-title">Sair p/ aero</span>
         </div>
       </div>
 
       <div class="now-card" id="now-card" hidden>
         <span class="now-pulse"></span>
         <div>
-          <strong>Acontecendo agora</strong>
+          <strong>Agora</strong>
           <div id="now-title">—</div>
+        </div>
+      </div>
+
+      <div class="progress-card" id="progress-card">
+        <div class="progress-head">
+          <strong>Progresso do roteiro</strong>
+          <span id="progress-count">0 / 0</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
         </div>
       </div>
     </section>
@@ -112,32 +98,33 @@
     <section id="roteiro" class="section">
       <header class="section-head">
         <h2>Roteiro</h2>
-        <button id="reset-checks" class="ghost-btn">Limpar marcações</button>
+        <button id="reset-checks" class="ghost-btn">Limpar</button>
       </header>
+
+      <div class="day-tabs" id="day-tabs"></div>
       <div id="roteiro-container" class="roteiro-container"></div>
     </section>
 
-    <!-- ============ RESTAURANTES ============ -->
-    <section id="restaurantes" class="section">
-      <header class="section-head">
-        <h2>Restaurantes &amp; Bares</h2>
-      </header>
+    <!-- ============ COMER ============ -->
+    <section id="comer" class="section">
+      <header class="section-head"><h2>Comer</h2></header>
 
-      <div class="filter-row" data-filter-group="restaurantes">
-        <button class="chip active" data-filter="all">Todos</button>
-        <button class="chip" data-filter="parrilla">🥩 Parrilla</button>
-        <button class="chip" data-filter="bodegon">🍴 Bodegón</button>
-        <button class="chip" data-filter="japa">🍣 Japa</button>
-        <button class="chip" data-filter="italiana">🍝 Italiana</button>
-        <button class="chip" data-filter="judaica">🕎 Judaica</button>
-        <button class="chip" data-filter="burger">🍔 Burger</button>
-      </div>
-
-      <div class="filter-row" data-filter-group="restaurantes-reserva">
-        <button class="chip active" data-filter="all">Qualquer reserva</button>
-        <button class="chip" data-filter="confirmada">Confirmada</button>
-        <button class="chip" data-filter="precisa">Precisa reservar</button>
-        <button class="chip" data-filter="walkin">Walk-in</button>
+      <div class="filter-bar">
+        <select id="filter-tipo" class="select-pill" aria-label="Filtrar por tipo">
+          <option value="all">Todos os tipos</option>
+          <option value="parrilla">🥩 Parrilla</option>
+          <option value="bodegon">🍴 Bodegón</option>
+          <option value="japa">🍣 Japa</option>
+          <option value="italiana">🍝 Italiana</option>
+          <option value="judaica">🕎 Judaica</option>
+          <option value="burger">🍔 Burger</option>
+        </select>
+        <select id="filter-reserva" class="select-pill" aria-label="Filtrar por reserva">
+          <option value="all">Qualquer reserva</option>
+          <option value="confirmada">Confirmada</option>
+          <option value="precisa">Precisa reservar</option>
+          <option value="walkin">Walk-in</option>
+        </select>
       </div>
 
       <div id="restaurantes-grid" class="card-grid"></div>
@@ -151,13 +138,13 @@
 
     <!-- ============ BARES ============ -->
     <section id="bares" class="section">
-      <header class="section-head"><h2>Bares</h2></header>
+      <header class="section-head"><h2>Bares &amp; baladas</h2></header>
       <div id="bares-grid" class="card-grid"></div>
     </section>
 
     <!-- ============ COMPRAS ============ -->
     <section id="compras" class="section">
-      <header class="section-head"><h2>Compras (pra Bia)</h2></header>
+      <header class="section-head"><h2>Compras</h2></header>
       <div id="compras-container" class="compras-container"></div>
     </section>
 
@@ -165,7 +152,10 @@
     <section id="mapa" class="section">
       <header class="section-head"><h2>Mapa</h2></header>
       <div id="map" class="map-box"></div>
-      <div class="legenda" id="map-legenda"></div>
+      <details class="legenda-details">
+        <summary>Legenda</summary>
+        <div class="legenda" id="map-legenda"></div>
+      </details>
     </section>
 
     <!-- ============ LOGÍSTICA ============ -->
@@ -173,30 +163,65 @@
       <header class="section-head"><h2>Logística</h2></header>
       <div id="logistica-container" class="logistica-container"></div>
 
-      <h3 class="sub-head">Distâncias a partir do Vain</h3>
-      <div class="table-wrap">
-        <table id="distancias-table" class="distancias">
-          <thead><tr><th>Lugar</th><th>A pé</th><th>Carro</th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
+      <details class="dist-details">
+        <summary>Distâncias do hotel</summary>
+        <div class="table-wrap">
+          <table id="distancias-table" class="distancias">
+            <thead><tr><th>Lugar</th><th>A pé</th><th>Carro</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </details>
     </section>
+
+    <div class="footer-spacer"></div>
   </main>
 
-  <footer class="footer">
-    <small>Feito com 🧉 pra Lourenço &amp; Bia · 15-17 maio 2026</small>
-  </footer>
+  <!-- ============ BOTTOM NAV ============ -->
+  <nav class="bottomnav" aria-label="Navegação">
+    <a href="#visao" data-nav class="bn active">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
+      <span>Início</span>
+    </a>
+    <a href="#roteiro" data-nav class="bn">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      <span>Roteiro</span>
+    </a>
+    <a href="#comer" data-nav class="bn">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h2v11"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>
+      <span>Comer</span>
+    </a>
+    <a href="#mapa" data-nav class="bn">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span>Mapa</span>
+    </a>
+    <button id="more-btn" class="bn" aria-label="Mais">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>
+      <span>Mais</span>
+    </button>
+  </nav>
 
-  <!-- Leaflet JS -->
+  <!-- Mini-menu "Mais" -->
+  <div class="more-sheet" id="more-sheet" hidden>
+    <a href="#cafes" data-nav class="more-link">☕ Cafés</a>
+    <a href="#bares" data-nav class="more-link">🍸 Bares</a>
+    <a href="#compras" data-nav class="more-link">🛍️ Compras</a>
+    <a href="#logistica" data-nav class="more-link">🧳 Logística</a>
+  </div>
+  <div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+
+  <!-- ============ BOTTOM SHEET de detalhe do lugar ============ -->
+  <div class="detail-sheet" id="detail-sheet" hidden>
+    <button class="detail-close" id="detail-close" aria-label="Fechar">×</button>
+    <div class="detail-body" id="detail-body"></div>
+  </div>
+  <div class="sheet-backdrop" id="detail-backdrop" hidden></div>
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
           integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
-  <!-- App (ES modules) -->
   <script type="module" src="scripts/app.js"></script>
 
   <script>
-    // Registro do service worker pra modo offline (PWA).
-    // Roda só depois da página carregar pra não travar primeira tela.
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker.register("service-worker.js").catch(() => {});

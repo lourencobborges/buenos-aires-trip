@@ -1,45 +1,40 @@
 /* =====================================================================
-   RESPONSIVO — mobile-first é o base em main.css.
-   Aqui só os breakpoints up (tablet/desktop).
+   RESPONSIVO — main.css é mobile-first.
+   Ajustes pra telas maiores e preferências de SO.
    ===================================================================== */
 
-@media (min-width: 600px) {
-  .quick-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
+@media (min-width: 640px) {
   .card-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  .nav { gap: 10px; }
+  .map-box { height: 480px; }
 }
 
 @media (min-width: 900px) {
-  .header { padding: 14px 24px 0; }
-  .section { padding: 36px 24px 12px; }
+  :root { --max-w: 880px; }
+  .section { padding: 48px 24px 16px; }
 
-  .quick-grid {
-    grid-template-columns: repeat(3, 1fr);
+  /* Em telas maiores volta a nav horizontal lateral no topo e esconde bottom nav */
+  .bottomnav { display: none; }
+  body { padding-bottom: 32px; }
+
+  .topbar {
+    height: 64px;
+  }
+  .topbar-inner::after {
+    content: "";
   }
 
-  .hero-title { font-size: 32px; }
-
-  .section-head h2 { font-size: 30px; }
-
+  .hero-title { font-size: 56px; }
   .map-box { height: 520px; }
 }
 
-/* Respeita preferência do sistema, mas só na primeira carga.
-   O toggle manual sobrescreve via data-theme="..." no body. */
 @media (prefers-color-scheme: dark) {
-  body:not([data-theme]) {
-    background: #1a1410;
-    color: #f0e6d2;
+  body:not([data-theme="light"]) {
+    /* só aplica o esquema escuro se o usuário não escolheu explicitamente light */
   }
 }
 
-/* Reduz animações pra quem prefere */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

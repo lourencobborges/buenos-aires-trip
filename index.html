@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#fdfaf4" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#14110d" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#74acdf" />
   <title>Buenos Aires · Lourenço & Bia</title>
   <meta name="description" content="Roteiro Buenos Aires — 15 a 17 de maio de 2026." />
 
@@ -12,11 +11,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-
-  <link rel="stylesheet" href="styles/main.css" />
-  <link rel="stylesheet" href="styles/responsive.css" />
+  <link rel="stylesheet" href="styles/main.css?v=4" />
+  <link rel="stylesheet" href="styles/responsive.css?v=4" />
 
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="assets/icons/icon-192.png" />
@@ -24,11 +20,14 @@
 </head>
 <body data-theme="light">
 
+  <!-- Faixa da bandeira argentina (azul/branco/azul + sol) -->
+  <div class="flag-strip" aria-hidden="true"></div>
+
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
-        <span class="brand-title">Buenos Aires</span>
-        <span class="brand-dates">15 → 17 maio</span>
+        <span class="brand-title">Buenos Aires <span class="sun" aria-hidden="true">☀</span></span>
+        <span class="brand-dates">15 → 17 maio · Lourenço &amp; Bia</span>
       </div>
       <button id="theme-toggle" class="icon-btn" aria-label="Alternar tema">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="theme-icon">
@@ -75,45 +74,34 @@
     </section>
 
     <section id="comer" class="section">
-      <header class="section-head"><h2>Comer</h2></header>
+      <header class="section-head"><h2>Comer &amp; beber</h2></header>
+
       <select id="filter-tipo" class="select-pill" aria-label="Filtrar por tipo">
-        <option value="all">Todos</option>
+        <option value="all">Todos os restaurantes</option>
         <option value="parrilla">🥩 Parrilla</option>
         <option value="bodegon">🍴 Bodegón</option>
         <option value="japa">🍣 Japa</option>
         <option value="italiana">🍝 Italiana</option>
       </select>
       <div id="restaurantes-grid" class="card-grid"></div>
-    </section>
 
-    <section id="cafes" class="section">
-      <header class="section-head"><h2>Cafés</h2></header>
+      <h3 class="sub-section">☕ Cafés</h3>
       <div id="cafes-grid" class="card-grid"></div>
+
+      <h3 class="sub-section">🍸 Bares</h3>
+      <div id="bares-grid" class="card-grid"></div>
     </section>
 
     <section id="lojas" class="section">
       <header class="section-head"><h2>Lojas (Bia)</h2></header>
-      <p class="section-intro">As 4 que ela faz questão estão em <strong>destaque</strong>. Etiqueta <span class="closed-tag-inline">Fecha dom</span> avisa as que só abrem no sábado.</p>
+      <p class="section-intro">As 4 com <strong>★</strong> são as que ela faz questão. Etiqueta amarela <span class="closed-tag-inline">Fecha dom</span> avisa as que só abrem sábado.</p>
       <div id="compras-grid" class="card-grid"></div>
-    </section>
-
-    <section id="bares" class="section">
-      <header class="section-head"><h2>Bares</h2></header>
-      <div id="bares-grid" class="card-grid"></div>
-    </section>
-
-    <section id="mapa" class="section">
-      <header class="section-head"><h2>Mapa</h2></header>
-      <div id="map" class="map-box"></div>
-      <details class="legenda-details">
-        <summary>Legenda</summary>
-        <div class="legenda" id="map-legenda"></div>
-      </details>
     </section>
 
     <div class="footer-spacer"></div>
   </main>
 
+  <!-- Bottom nav: 4 abas grandes, tudo aparente -->
   <nav class="bottomnav" aria-label="Navegação">
     <a href="#visao" data-nav class="bn active">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
@@ -124,40 +112,33 @@
       <span>Roteiro</span>
     </a>
     <a href="#comer" data-nav class="bn">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h2v11"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h2v11"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>
       <span>Comer</span>
     </a>
-    <a href="#mapa" data-nav class="bn">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      <span>Mapa</span>
+    <a href="#lojas" data-nav class="bn">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
+      <span>Lojas</span>
     </a>
-    <button id="more-btn" class="bn" aria-label="Mais">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>
-      <span>Mais</span>
-    </button>
   </nav>
 
-  <div class="more-sheet" id="more-sheet" hidden>
-    <a href="#cafes" data-nav class="more-link">☕ Cafés</a>
-    <a href="#lojas" data-nav class="more-link">🛍️ Lojas</a>
-    <a href="#bares" data-nav class="more-link">🍸 Bares</a>
-  </div>
-  <div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
-
+  <!-- Bottom sheet de detalhe do lugar -->
   <div class="detail-sheet" id="detail-sheet" hidden>
-    <button class="detail-close" id="detail-close" aria-label="Fechar">×</button>
+    <button class="detail-close" id="detail-close" aria-label="Fechar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
     <div class="detail-body" id="detail-body"></div>
   </div>
   <div class="sheet-backdrop" id="detail-backdrop" hidden></div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script type="module" src="scripts/app.js"></script>
+  <script type="module" src="scripts/app.js?v=4"></script>
 
   <script>
+    // Atualiza o service worker — força reload do cache na próxima visita
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
-        navigator.serviceWorker.register("service-worker.js").catch(() => {});
+        navigator.serviceWorker.register("service-worker.js").then(reg => {
+          reg.update();
+        }).catch(() => {});
       });
     }
   </script>

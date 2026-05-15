@@ -4,14 +4,13 @@
 // "Mais" menu, filtros, tema, countdown, progress bar, modo "agora".
 // =====================================================================
 
-import { LUGARES, ROTEIRO, VIAGEM } from "./data.js";
+import { ROTEIRO, VIAGEM } from "./data.js";
 import { storage, theme as themeStore } from "./storage.js";
 import {
   renderRestaurantes, renderCafes, renderBares, renderCompras,
   renderRoteiro,
   lugarDetalheHTML,
 } from "./render.js";
-import { initMap, renderLegenda } from "./map.js";
 
 // ---------------------------------------------------------------------
 // Helpers DOM
@@ -28,7 +27,6 @@ function renderAll() {
   renderCafes();
   renderBares();
   renderCompras();
-  renderLegenda("map-legenda");
   updateProgress();
 }
 
@@ -37,30 +35,20 @@ function renderAll() {
 // ---------------------------------------------------------------------
 function initNav() {
   const links = $$("[data-nav]");
-  const sectionIds = ["visao", "roteiro", "comer", "cafes", "lojas", "bares", "mapa"];
+  const sectionIds = ["visao", "roteiro", "comer", "lojas"];
   const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
-
-  // Mapeia cada seção pro link mais próximo (alguns links representam várias seções)
-  function linkParaSecao(id) {
-    if (["cafes", "bares", "lojas"].includes(id)) return links.find(l => l.id === "more-btn") || null;
-    return links.find(l => l.getAttribute("href") === "#" + id) || null;
-  }
 
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        const id = e.target.id;
-        const target = linkParaSecao(id);
+        const target = links.find(l => l.getAttribute("href") === "#" + e.target.id);
         if (!target) return;
         links.forEach(l => l.classList.toggle("active", l === target));
       }
     });
-  }, { rootMargin: "-50% 0px -45% 0px" });
+  }, { rootMargin: "-40% 0px -55% 0px" });
 
   sections.forEach(s => obs.observe(s));
-
-  // Fecha o "Mais" ao clicar num link
-  $$(".more-link").forEach(a => a.addEventListener("click", closeMoreSheet));
 }
 
 // ---------------------------------------------------------------------
@@ -172,55 +160,38 @@ function closeDetail() {
 }
 
 function initDetailSheet() {
-  $("#detail-close").addEventListener("click", closeDetail);
-  $("#detail-backdrop").addEventListener("click", closeDetail);
+  const sheet = $("#detail-sheet");
+  const backdrop = $("#detail-backdrop");
+
+  // Fechar: botão ×, tap no backdrop, ESC, ou tap na área do handle (topo do sheet)
+  $("#detail-close").addEventListener("click", e => { e.stopPropagation(); closeDetail(); });
+  backdrop.addEventListener("click", closeDetail);
+  backdrop.addEventListener("touchstart", closeDetail, { passive: true });
+
   document.addEventListener("keydown", e => {
-    if (e.key === "Escape" && !$("#detail-sheet").hidden) closeDetail();
+    if (e.key === "Escape" && !sheet.hidden) closeDetail();
   });
 
-  // Swipe down pra fechar (gesto simples)
-  const sheet = $("#detail-sheet");
+  // Tap na faixa do handle (primeiros 24px do sheet) também fecha
+  sheet.addEventListener("click", e => {
+    const rect = sheet.getBoundingClientRect();
+    if (e.clientY - rect.top < 24) closeDetail();
+  });
+
+  // Swipe down pra fechar
   let startY = null;
   sheet.addEventListener("touchstart", e => { startY = e.touches[0].clientY; }, { passive: true });
   sheet.addEventListener("touchend", e => {
     if (startY === null) return;
     const dy = e.changedTouches[0].clientY - startY;
-    if (dy > 80 && sheet.scrollTop === 0) closeDetail();
+    const body = $("#detail-body");
+    if (dy > 60 && body.scrollTop === 0) closeDetail();
     startY = null;
   }, { passive: true });
 }
 
 // ---------------------------------------------------------------------
-// 7. MENU "MAIS"
-// ---------------------------------------------------------------------
-function initMoreSheet() {
-  const btn = $("#more-btn");
-  const sheet = $("#more-sheet");
-  const bd = $("#sheet-backdrop");
-
-  function open() {
-    sheet.hidden = false;
-    bd.hidden = false;
-  }
-  function close() {
-    sheet.hidden = true;
-    bd.hidden = true;
-  }
-
-  btn.addEventListener("click", () => {
-    sheet.hidden ? open() : close();
-  });
-  bd.addEventListener("click", close);
-  window.closeMoreSheet = close;
-}
-
-function closeMoreSheet() {
-  $("#more-sheet").hidden = true;
-  $("#sheet-backdrop").hidden = true;
-}
-
-// ---------------------------------------------------------------------
-// 8. THEME
+// 7. THEME
 // ---------------------------------------------------------------------
 function initTheme() {
   const saved = themeStore.get();
@@ -291,10 +262,8 @@ function boot() {
   initFilters();
   initCardTaps();
   initDetailSheet();
-  initMoreSheet();
   initTheme();
   initNowMode();
-  initMap("map", LUGARES, VIAGEM.hotel);
 }
 
 if (document.readyState === "loading") {

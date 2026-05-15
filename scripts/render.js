@@ -151,6 +151,17 @@ export function renderCompras() {
 // Ícone SVG do "check" preenchido — pequeno, vai dentro do círculo
 const CHECK_SVG = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
 
+// Ícone pra pílula de transporte (a pé / carro)
+function transporteIcon(tipo) {
+  if (tipo === "pe") {
+    return `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4" r="2"/><path d="M10 22l2-6 2 4 4 2"/><path d="M5 10l3-3 5 5-5 5"/></svg>`;
+  }
+  if (tipo === "carro") {
+    return `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l2-5h14l2 5"/><path d="M3 13v5h18v-5"/><circle cx="7" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg>`;
+  }
+  return "";
+}
+
 export function renderRoteiro(roteiro) {
   // Tabs
   const tabs = roteiro.map((dia, idx) => {
@@ -187,6 +198,11 @@ export function renderRoteiro(roteiro) {
         ? `<div class="item-extra"><strong>Alternativa:</strong> ${esc(item.alternativa)}</div>`
         : "";
 
+      // Pílula de transporte: SEMPRE visível
+      const transportePill = item.transporte
+        ? `<span class="item-transport">${transporteIcon(item.transporte.tipo)} ${esc(item.transporte.tempo)}</span>`
+        : "";
+
       return `
         <div class="dia-item ${checked ? "done" : ""} ${item.destaque ? "destaque" : ""}"
              data-check-id="${id}"
@@ -195,6 +211,7 @@ export function renderRoteiro(roteiro) {
           <div class="item-time">${esc(item.hora)}</div>
           <div class="item-body">
             <div class="item-title">${esc(item.titulo)}</div>
+            ${transportePill}
             ${item.desc ? `<div class="item-desc">${esc(item.desc)}</div>` : ""}
             ${indicadoPor}
             ${alternativa}

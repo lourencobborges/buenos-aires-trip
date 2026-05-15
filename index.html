@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#1a1410" />
+  <meta name="theme-color" content="#fdfaf4" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#14110d" media="(prefers-color-scheme: dark)" />
   <title>Buenos Aires · Lourenço & Bia</title>
   <meta name="description" content="Roteiro interativo da viagem a Buenos Aires de 15 a 17 de maio de 2026." />
 
@@ -44,8 +45,8 @@
     <section id="visao" class="section section--first">
       <div class="hero">
         <p class="eyebrow">Roteiro · 3 dias</p>
-        <h1 class="hero-title">Palermo, parrillas &amp; sobremesa.</h1>
-        <p class="hero-sub">Vain Boutique Hotel — Thames 2226, Palermo Soho.</p>
+        <h1 class="hero-title">Buenos Aires, Lourenço &amp; Bia.</h1>
+        <p class="hero-sub">15 → 17 maio. Vain Boutique Hotel, Palermo Soho.</p>
 
         <div class="countdown" id="countdown" hidden>
           <div class="cd-num"><span id="cd-d">0</span><small>d</small></div>
@@ -116,8 +117,6 @@
           <option value="bodegon">🍴 Bodegón</option>
           <option value="japa">🍣 Japa</option>
           <option value="italiana">🍝 Italiana</option>
-          <option value="judaica">🕎 Judaica</option>
-          <option value="burger">🍔 Burger</option>
         </select>
         <select id="filter-reserva" class="select-pill" aria-label="Filtrar por reserva">
           <option value="all">Qualquer reserva</option>
@@ -140,12 +139,6 @@
     <section id="bares" class="section">
       <header class="section-head"><h2>Bares &amp; baladas</h2></header>
       <div id="bares-grid" class="card-grid"></div>
-    </section>
-
-    <!-- ============ COMPRAS ============ -->
-    <section id="compras" class="section">
-      <header class="section-head"><h2>Compras</h2></header>
-      <div id="compras-container" class="compras-container"></div>
     </section>
 
     <!-- ============ MAPA ============ -->
@@ -205,7 +198,6 @@
   <div class="more-sheet" id="more-sheet" hidden>
     <a href="#cafes" data-nav class="more-link">☕ Cafés</a>
     <a href="#bares" data-nav class="more-link">🍸 Bares</a>
-    <a href="#compras" data-nav class="more-link">🛍️ Compras</a>
     <a href="#logistica" data-nav class="more-link">🧳 Logística</a>
   </div>
   <div class="sheet-backdrop" id="sheet-backdrop" hidden></div>

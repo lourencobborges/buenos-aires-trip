@@ -102,7 +102,7 @@ export const LUGARES = [
     coords: [-34.5780, -58.4400],
     reserva: "walkin",
     indicacao: "Beatriz",
-    notas: "Omakase. 4.9⭐, walk-in obrigatório. Opção sáb à noite, abre até 00h.",
+    notas: "Não aceita reserva — só walk-in. Omakase, 4.9⭐. Abre até 00h, opção pra sáb à noite depois do Florería.",
   },
   {
     id: "la-cabrera",
@@ -111,20 +111,9 @@ export const LUGARES = [
     bairro: "Palermo",
     endereco: "José A. Cabrera 5099, Palermo",
     coords: [-34.5872, -58.4350],
-    reserva: "precisa",
+    reserva: "walkin",
     indicacao: "Beatriz",
-    notas: "Cheio no fds — reserva via meitre.com.",
-  },
-  {
-    id: "mishiguene",
-    nome: "Mishiguene",
-    tipo: "judaica",
-    bairro: "Palermo",
-    endereco: "Lafinur 3368, Palermo",
-    coords: [-34.5793, -58.4137],
-    reserva: "precisa",
-    indicacao: "Beatriz",
-    notas: "Judaica autoral, reserva via Meitre.",
+    notas: "Não conseguimos reserva pelo Meitre — fim de semana lota cedo. Se quiser tentar walk-in, ir muito cedo (19h) ou tarde.",
   },
   {
     id: "la-alacena",
@@ -179,17 +168,6 @@ export const LUGARES = [
     notas: "Parrilla refinada do Four Seasons.",
   },
   {
-    id: "guita",
-    nome: "Guita",
-    tipo: "burger",
-    bairro: "Palermo",
-    endereco: "Palermo",
-    coords: [-34.5860, -58.4275],
-    reserva: "walkin",
-    indicacao: "Beatriz",
-    notas: "Cheeseburger informal.",
-  },
-  {
     id: "el-bocadito",
     nome: "El Bocadito",
     tipo: "bodegon",
@@ -211,7 +189,7 @@ export const LUGARES = [
     reserva: "walkin",
     indicacao: "Pedro + Clara Sigrist",
     destaque: true,
-    notas: "World's 50 Best Bars #46 (2024). Sáb 20:30 walk-in. Falar: 'Hola, dos personas para tomar tragos'. Marca: Príncipe de Apóstoles.",
+    notas: "Não conseguimos reserva — só walk-in. World's 50 Best Bars #46 (2024). Chegar 20:30 (abrem 20h) pra evitar fila. Falar: 'Hola, dos personas para tomar tragos'. Marca: Príncipe de Apóstoles.",
   },
   {
     id: "gris-gris",
@@ -366,9 +344,10 @@ export const ROTEIRO = [
     titulo: "Chegada",
     icone: "plane",
     itens: [
-      { hora: "21:45", lugarId: null, titulo: "Pouso em Ezeiza", desc: "Sem bagagem despachada. Pegar Cabify/Uber pro hotel (~45-60 min, R$80-120)." },
-      { hora: "23:30", lugarId: null, titulo: "Check-in no Vain", desc: "Avisar hotel com antecedência do horário de chegada." },
-      { hora: "00:00", lugarId: "gris-gris", titulo: "Drink no Gris Gris (opcional)", desc: "Bar mais cool, vibe disco. 10 min do hotel, walk-in. Plano B: hotel + Rappi." },
+      { hora: "21:45", lugarId: null, titulo: "Pouso em Ezeiza", desc: "Imigração + saída do aeroporto: 30-45 min. Sem bagagem despachada." },
+      { hora: "22:30", lugarId: null, titulo: "Cabify pro hotel", desc: "~45-60 min até Palermo Soho. R$80-120. Conferir endereço Thames 2226." },
+      { hora: "23:30", lugarId: null, titulo: "Check-in no Vain", desc: "Avisar o hotel com antecedência. Pegar chave, deixar mala, refrescar." },
+      { hora: "00:00", lugarId: "gris-gris", titulo: "Drink no Gris Gris (opcional)", desc: "Bar cool/disco a 10 min do hotel, walk-in. Se cansado: hotel + Rappi." },
     ],
   },
   {
@@ -376,15 +355,15 @@ export const ROTEIRO = [
     titulo: "Don Julio + Florería",
     icone: "sun",
     itens: [
-      { hora: "10:00", lugarId: "oli", titulo: "Café no Oli ⭐", desc: "Must da Beatriz. ~12 min a pé do hotel, walk-in." },
-      { hora: "11:00", lugarId: null, titulo: "Uber pra Recoleta", desc: "~15 min." },
-      { hora: "11:30", lugarId: "recoleta-cemiterio", titulo: "Cemitério da Recoleta", desc: "Túmulo de Evita, mausoléus históricos." },
-      { hora: "12:30", lugarId: "el-ateneo", titulo: "El Ateneo Grand Splendid", desc: "Livraria ex-teatro. Foto obrigatória." },
-      { hora: "13:30", lugarId: "casa-palanti", titulo: "Lanche LEVE em Recoleta", desc: "Casa Palanti ou só café — não comer pesado." },
-      { hora: "14:00", lugarId: null, titulo: "Uber de volta pra Palermo", desc: "" },
-      { hora: "14:30", lugarId: null, titulo: "Hotel, refresca e troca", desc: "" },
+      { hora: "10:00", lugarId: "oli", titulo: "Café no Oli ⭐", desc: "Must da Bia. 12 min a pé ou 4 min Uber. Walk-in. Pedir medialunas + flat white." },
+      { hora: "11:15", lugarId: null, titulo: "Uber pra Recoleta", desc: "~15 min de Palermo Hollywood até Recoleta." },
+      { hora: "11:30", lugarId: "recoleta-cemiterio", titulo: "Cemitério da Recoleta", desc: "1h aqui. Túmulo de Evita, mausoléus históricos. Entrada paga." },
+      { hora: "12:30", lugarId: "el-ateneo", titulo: "El Ateneo Grand Splendid", desc: "5 min a pé do cemitério. 30 min — foto obrigatória e olhar de cima." },
+      { hora: "13:00", lugarId: "casa-palanti", titulo: "Lanche LEVE em Recoleta", desc: "Casa Palanti ou só café — NÃO comer pesado. Don Julio é em 2h." },
+      { hora: "13:45", lugarId: null, titulo: "Uber de volta pra Palermo", desc: "~15 min." },
+      { hora: "14:15", lugarId: null, titulo: "Hotel: refresca e troca", desc: "45 min pra trocar, beber água e respirar." },
       { hora: "15:00", lugarId: "don-julio", titulo: "🥩 DON JULIO (RESERVADO)", desc: "Chegar 14:50. Ver sugestões de pedido no card do lugar.", destaque: true },
-      { hora: "17:30", lugarId: null, titulo: "Descansar antes do Florería", desc: "Opções: cochilo no hotel, banho longo, passeio leve por Palermo Soho (Honduras/El Salvador), café no Cuervo ou drink no Tres Monos. Saída pro Florería 20:00-20:30." },
+      { hora: "17:30", lugarId: null, titulo: "Tempo livre até o Florería", desc: "Saída pro Florería 20:00-20:30. Opções:\n• Descansar no hotel (cochilo + banho)\n• Caminhar por Palermo Soho (ruas Honduras, El Salvador, Gurruchaga, Thames — em volta do hotel)\n• Pôr-do-sol no Bosques de Palermo (8 min Uber)\n• Drink rápido no Tres Monos (Guatemala 4699, 1 min do Don Julio)\n• Aldo's Vinoteca pra escolher um vinho pra trazer" },
       { hora: "20:30", lugarId: "floreria", titulo: "🍸 Florería Atlántico (walk-in)", desc: "Chegar 20:30 pra evitar fila. ~2-2h30 no local.", destaque: true },
       { hora: "23:00", lugarId: null, titulo: "Pós-Florería — escolher", desc: "1) Norimoto (japa) 2) CoChinChina (bar) 3) Uptown (balada) 4) Hotel." },
     ],
@@ -394,55 +373,23 @@ export const ROTEIRO = [
     titulo: "El Preferido + voo",
     icone: "plane-takeoff",
     itens: [
-      { hora: "09:30", lugarId: null, titulo: "Acorda", desc: "" },
-      { hora: "10:00", lugarId: "cuervo", titulo: "Café no Cuervo ⭐", desc: "7 min a pé do Vain, walk-in." },
-      { hora: "11:00", lugarId: null, titulo: "Checkout + luggage storage", desc: "Deixar malas no Vain até a noite." },
-      { hora: "11:30", lugarId: "san-telmo", titulo: "Feira de San Telmo 🌟", desc: "Único dia. Caminhada pela rua Defensa." },
-      { hora: "13:30", lugarId: null, titulo: "Uber de volta pra Palermo", desc: "" },
-      { hora: "14:30", lugarId: null, titulo: "Hotel, refresca", desc: "" },
-      { hora: "15:00", lugarId: "el-preferido", titulo: "🥩 EL PREFERIDO (RESERVADO)", desc: "AVISAR garçom logo do voo 21:55. Sair 17:30 max.", destaque: true },
-      { hora: "17:30", lugarId: null, titulo: "Sai do El Preferido", desc: "Pula sobremesa se necessário." },
-      { hora: "17:45", lugarId: null, titulo: "Hotel, pega malas", desc: "" },
-      { hora: "18:15", lugarId: null, titulo: "Cabify pra Ezeiza (MÁX)", desc: "45-60 min." },
-      { hora: "19:30", lugarId: null, titulo: "Chega Ezeiza", desc: "" },
+      { hora: "09:30", lugarId: null, titulo: "Acorda + arruma malas", desc: "Tudo pronto pra deixar no luggage storage." },
+      { hora: "10:00", lugarId: "cuervo", titulo: "Café no Cuervo ⭐", desc: "7 min a pé do Vain, walk-in. Avocado toast, alfajor, flat white." },
+      { hora: "11:00", lugarId: null, titulo: "Checkout + luggage storage", desc: "Deixar malas no Vain até a tarde." },
+      { hora: "11:30", lugarId: null, titulo: "Uber pra San Telmo", desc: "~20 min até Plaza Dorrego." },
+      { hora: "12:00", lugarId: "san-telmo", titulo: "Feira de San Telmo 🌟", desc: "Único dia. Caminhada pela rua Defensa, antiguidades, tango de rua. ~1h30." },
+      { hora: "13:30", lugarId: null, titulo: "Uber de volta pra Palermo", desc: "~20 min." },
+      { hora: "14:00", lugarId: null, titulo: "Hotel: descansa e troca", desc: "1h pra respirar antes do El Preferido. Já deixar tudo pronto pra pegar as malas correndo às 17:45." },
+      { hora: "14:55", lugarId: null, titulo: "Caminhada até El Preferido", desc: "5 min a pé." },
+      { hora: "15:00", lugarId: "el-preferido", titulo: "🥩 EL PREFERIDO (RESERVADO)", desc: "AVISAR o garçom LOGO que o voo é 21:55 — precisa sair 17:30 máx.", destaque: true },
+      { hora: "17:30", lugarId: null, titulo: "Sai do El Preferido", desc: "Pula sobremesa se atrasar." },
+      { hora: "17:45", lugarId: null, titulo: "Hotel: pega malas", desc: "Conferir documentos (passaporte!) antes de chamar o Cabify." },
+      { hora: "18:15", lugarId: null, titulo: "Cabify pra Ezeiza (LIMITE)", desc: "45-60 min até o aeroporto. Não atrasar." },
+      { hora: "19:30", lugarId: null, titulo: "Chega Ezeiza", desc: "Check-in voo, segurança." },
       { hora: "21:55", lugarId: null, titulo: "✈️ DECOLA", desc: "" },
     ],
   },
 ];
-
-// ---------------------------------------------------------------------
-// COMPRAS — lojas e regiões pra Beatriz
-// ---------------------------------------------------------------------
-
-export const COMPRAS = {
-  modaFeminina: [
-    { nome: "Rapsodia", desc: "Queridinha argentina, várias unidades em Palermo Soho" },
-    { nome: "Jazmín Chebar", desc: "Moda feminina, Palermo" },
-    { nome: "Maria Cher", desc: "Design contemporâneo argentino" },
-    { nome: "Complot", desc: "Moda urbana" },
-    { nome: "Bolivia", desc: "Boutique conceito Palermo" },
-  ],
-  couro: [
-    { nome: "Arandú", desc: "Couro de qualidade, várias unidades" },
-    { nome: "Casa Fagliano", desc: "Botas e couro de polo, ícone" },
-    { nome: "Prüne", desc: "Bolsas e acessórios" },
-  ],
-  areas: [
-    { nome: "Palermo Soho", desc: "Boutiques independentes, ruas Honduras / El Salvador / Gurruchaga / Thames (volta do hotel)" },
-    { nome: "Avenida Santa Fé", desc: "Recoleta — shopping de rua tradicional" },
-    { nome: "Recoleta Mall + Patio Bullrich", desc: "Shoppings tradicionais" },
-    { nome: "Distrito Arcos", desc: "Outlet de marcas premium em Palermo" },
-  ],
-  feiras: [
-    { nome: "Feira de San Telmo", desc: "Só domingo — antiguidades e artesanato" },
-    { nome: "Mercat Villa Crespo", desc: "Mercado gastronômico" },
-    { nome: "Mercado de Pulgas (Dorrego)", desc: "Vintage e antiguidades" },
-  ],
-  vinhos: [
-    { nome: "Aldo's Vinoteca", desc: "Palermo" },
-    { nome: "Lo de Joaquín Alberdi", desc: "Vinhos selecionados" },
-  ],
-};
 
 // ---------------------------------------------------------------------
 // LOGÍSTICA — dicas práticas
@@ -524,17 +471,14 @@ export const DISTANCIAS = [
 // ---------------------------------------------------------------------
 
 export const TIPO_META = {
-  parrilla: { label: "Parrilla", icone: "🥩", cor: "#a13b2a" },
-  bodegon: { label: "Bodegón", icone: "🍴", cor: "#b8552d" },
-  japa: { label: "Japonesa", icone: "🍣", cor: "#1f4f6f" },
-  italiana: { label: "Italiana", icone: "🍝", cor: "#6c8a3a" },
-  judaica: { label: "Judaica", icone: "🕎", cor: "#3a4d7a" },
-  burger: { label: "Burger", icone: "🍔", cor: "#a07030" },
-  cafe: { label: "Café", icone: "☕", cor: "#6b4226" },
-  bar: { label: "Bar", icone: "🍸", cor: "#7a2a44" },
-  balada: { label: "Balada", icone: "💃", cor: "#5d2275" },
-  compras: { label: "Compras", icone: "🛍️", cor: "#3a6b6b" },
-  passeio: { label: "Passeio", icone: "📍", cor: "#7a5a2a" },
+  parrilla: { label: "Parrilla", icone: "🥩", cor: "#b8482e" },
+  bodegon: { label: "Bodegón", icone: "🍴", cor: "#c96b3a" },
+  japa: { label: "Japonesa", icone: "🍣", cor: "#2a6b8a" },
+  italiana: { label: "Italiana", icone: "🍝", cor: "#7a9d3a" },
+  cafe: { label: "Café", icone: "☕", cor: "#8a5a32" },
+  bar: { label: "Bar", icone: "🍸", cor: "#8a3a52" },
+  balada: { label: "Balada", icone: "💃", cor: "#6d3088" },
+  passeio: { label: "Passeio", icone: "📍", cor: "#8a6a3a" },
 };
 
 export const RESERVA_META = {

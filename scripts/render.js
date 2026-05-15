@@ -116,7 +116,7 @@ export function lugarDetalheHTML(id) {
 // LISTAS por categoria
 // ---------------------------------------------------------------------
 export function renderRestaurantes() {
-  const tipos = ["parrilla", "bodegon", "japa", "italiana", "judaica", "burger"];
+  const tipos = ["parrilla", "bodegon", "japa", "italiana"];
   const lista = LUGARES.filter(l => tipos.includes(l.tipo));
   document.getElementById("restaurantes-grid").innerHTML = lista.map(lugarCardHTML).join("");
 }
@@ -189,31 +189,6 @@ export function renderRoteiro(roteiro) {
   }).join("");
 
   document.getElementById("roteiro-container").innerHTML = dias;
-}
-
-// ---------------------------------------------------------------------
-// COMPRAS
-// ---------------------------------------------------------------------
-export function renderCompras(compras) {
-  const grupos = [
-    { titulo: "Moda feminina", chave: "modaFeminina" },
-    { titulo: "Couro argentino", chave: "couro" },
-    { titulo: "Áreas pra circular", chave: "areas" },
-    { titulo: "Feiras", chave: "feiras" },
-    { titulo: "Vinhos", chave: "vinhos" },
-  ];
-
-  document.getElementById("compras-container").innerHTML = grupos.map(g => `
-    <div class="compras-grupo">
-      <h3>${esc(g.titulo)}</h3>
-      ${compras[g.chave].map(item => `
-        <div class="compras-item">
-          <strong>${esc(item.nome)}</strong>
-          <span>${esc(item.desc)}</span>
-        </div>
-      `).join("")}
-    </div>
-  `).join("");
 }
 
 // ---------------------------------------------------------------------
